@@ -1,65 +1,173 @@
-import Image from "next/image";
+"use client";
+
+import { Button } from "@/components/Button";
+import { CaseStudyCard } from "@/components/Card";
+import HeroSection from "@/components/HeroSection";
+import { SectionTitle } from "@/components/SectionTitle";
+import { caseStudies } from "@/constants/case-studies";
+import { personalInfo } from "@/constants/profile";
+import { motion } from "framer-motion";
+import { ArrowRight, Mail } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      {/* Hero Section - Bento Grid Style */}
+      <HeroSection />
+
+      {/* Featured Work Section */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <SectionTitle
+            label="Featured Work"
+            title="My Projects"
+            description="Dive into the design process behind products I've helped bring to life."
+          />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {caseStudies.slice(0, 3).map((study, index) => (
+              <CaseStudyCard
+                key={study.id}
+                title={study.title}
+                subtitle={study.subtitle}
+                category={study.category}
+                year={study.year}
+                thumbnail={study.thumbnail}
+                slug={study.slug}
+                index={index}
+              />
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-12 text-center"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <Button href="/work" variant="outline">
+              View All Projects
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </motion.div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Brief About Section with Skills */}
+      <section className="section-padding bg-neutral-50">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="inline-block text-sm font-medium text-primary-600 mb-2 tracking-wide uppercase">
+                About Me
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-6">
+                Designer who learns fast,
+                <br />
+                <span className="text-primary-600">builds faster.</span>
+              </h2>
+              <p className="text-neutral-600 leading-relaxed mb-6">
+                {personalInfo.about.intro}
+              </p>
+              <Button
+                href="/about"
+                className="bg-blue-600 text-white hover:bg-blue-700 shadow-lg"
+              >
+                More About Me
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </motion.div>
+
+            {/* Skills Categories - White with Blue Text */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
+              {[
+                {
+                  title: "UX/UI Design",
+                  skills: "User Research • Wireframe • Prototype",
+                },
+                {
+                  title: "Front-End Basics",
+                  skills: "HTML • CSS • Responsive",
+                },
+                {
+                  title: "Visual & Editing",
+                  skills: "Photoshop • Video Editing",
+                },
+                {
+                  title: "Self-Initiated Projects",
+                  skills: "Case Studies & Concept Apps",
+                },
+              ].map((category, index) => (
+                <motion.div
+                  key={category.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -4 }}
+                  className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all"
+                >
+                  <h3 className="text-lg font-bold text-blue-600 mb-2">
+                    {category.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">{category.skills}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section-padding bg-primary-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid opacity-10" />
+        <div className="container-custom relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Let's Work Together
+            </h2>
+            <p className="text-primary-100 text-lg mb-8 max-w-xl mx-auto">
+              Have a project in mind? I'd love to hear about it. Let's chat and
+              see how I can help.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                href="/contact"
+                className="bg-white text-primary-600 hover:bg-primary-50"
+                size="lg"
+              >
+                Get in Touch
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+
+              {/* Email button với thẻ <a> thuần để mailto: work */}
+              <a
+                href="mailto:lvithong31@gmail.com"
+                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white rounded-xl hover:bg-white/10 transition-all text-lg font-semibold"
+              >
+                <Mail className="w-5 h-5" />
+                lvithong31@gmail.com
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 }
