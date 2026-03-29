@@ -68,7 +68,7 @@ export default function Home() {
                 About Me
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-6">
-                Designer who learns asdasdsd,
+                Designer who learns fast,
                 <br />
                 <span className="text-primary-600">builds faster.</span>
               </h2>
