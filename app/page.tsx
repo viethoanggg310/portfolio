@@ -294,7 +294,7 @@ export default function Home() {
       <section className="py-14 px-6 bg-white">
         <div className="max-w-4xl mx-auto">
           <SectionTitle
-            badge="Project ✦ Pixel"
+            badge="My Projects"
             badgeVariant="orange"
             title="My Projects"
             description="Dive into the design process behind products I've helped bring to life."
