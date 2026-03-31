@@ -237,7 +237,7 @@ export default function About() {
           </div>
 
           {/* running marquee */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -259,7 +259,7 @@ export default function About() {
               reverse={true}
               speed={0.032}
             />
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
 
@@ -321,81 +321,107 @@ export default function About() {
       </section>
 
       {/* ✅ Contact — NO border-t */}
-      <section className="relative z-10 px-6 py-16 bg-white overflow-hidden">
+      <section
+        id="contact"
+        className="py-24 px-6 bg-white relative overflow-hidden"
+      >
         <div
-          className="absolute inset-0 pointer-events-none opacity-20"
+          className="absolute inset-0 pointer-events-none opacity-[0.18]"
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)`,
             backgroundSize: "52px 52px",
           }}
         />
-        <div className="relative z-10 max-w-md mx-auto text-center">
+
+        <div className="relative z-10 max-w-lg mx-auto">
+          {/* ── heading — font nhỏ hơn trước ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-10"
           >
-            <motion.span
-              className="inline-block text-[#3B5BDB] text-xl mb-2 select-none"
-              animate={{ rotate: [0, 20, -20, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              ✦
-            </motion.span>
-            <h2
-              className="font-black text-[#1a1a1a] leading-tight mb-1"
-              style={{
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                fontFamily: "'Georgia', serif",
-              }}
-            >
-              Don&apos;t be a{" "}
+            {/* line 1: "Don't be a" + spinning star */}
+            <div className="flex items-start justify-center gap-2 mb-0.5">
+              <h2
+                className="font-black text-[#1a1a1a] leading-[1.05]"
+                style={{
+                  fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
+                  fontFamily: "'Georgia', serif",
+                }}
+              >
+                Don&apos;t be a
+              </h2>
+              <motion.span
+                className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0"
+                animate={{ rotate: [0, 20, -20, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                ✦
+              </motion.span>
+            </div>
+
+            {/* line 2: ✌️ badge + "Stranger" */}
+            <div className="flex items-center justify-center gap-2.5 mb-0.5">
               <span
-                className="inline-block px-3 py-0.5 rounded-xl align-middle"
+                className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
                 style={{
                   background: "#F5A623",
                   color: "#1a1a1a",
                   border: "2px solid #1a1a1a",
                   boxShadow: "3px 3px 0px #1a1a1a",
                   fontFamily: "'Georgia', serif",
-                  fontSize: "clamp(1.2rem, 3vw, 2rem)",
+                  fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
                 }}
               >
                 Stranger
               </span>
-            </h2>
+            </div>
+
+            {/* line 3: "let's Chat" */}
             <h2
-              className="font-black text-[#1a1a1a] leading-tight mb-8"
+              className="font-black text-[#1a1a1a] leading-[1.05] text-center"
               style={{
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
                 fontFamily: "'Georgia', serif",
               }}
             >
               let&apos;s Chat
             </h2>
           </motion.div>
+
+          {/* ── avatar LEFT (big, tilted) + contact RIGHT (bigger than before) ── */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            transition={{ delay: 0.15 }}
+            className="flex items-stretch gap-4"
           >
+            {/* avatar — tall, tilted left, 3D shadow blue */}
             <motion.div
-              initial={{ rotate: -6 }}
-              whileHover={{ rotate: 0, scale: 1.05 }}
+              initial={{ rotate: -5 }}
+              whileHover={{ rotate: 0, scale: 1.04 }}
               transition={{ type: "spring", stiffness: 280, damping: 20 }}
+              className="flex-shrink-0"
             >
               <div
-                className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0"
+                className="w-[100px] rounded-2xl overflow-hidden"
                 style={{
+                  height: "100%",
+                  minHeight: "136px",
                   border: "3px solid #1a1a1a",
-                  boxShadow: "4px 4px 0px #1a1a1a",
+                  boxShadow:
+                    "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
                 }}
               >
-                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
+                <div
+                  className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
+                  style={{ minHeight: "136px" }}
+                >
                   <span
-                    className="text-white font-black text-2xl"
+                    className="text-white font-black text-3xl"
                     style={{ fontFamily: "'Georgia', serif" }}
                   >
                     V
@@ -403,36 +429,47 @@ export default function About() {
                 </div>
               </div>
             </motion.div>
-            <div className="flex flex-col gap-2.5 w-full max-w-xs">
+
+            {/* contact links — to hơn */}
+            <div className="flex flex-col gap-3 flex-1">
+              {/* email button — cao hơn, font lớn hơn */}
               <motion.a
                 href="mailto:lvithong31@gmail.com"
                 whileHover={{ scale: 1.02, x: 3 }}
                 whileTap={{ scale: 0.97 }}
-                className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-white text-sm"
+                className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
                 style={{
                   background: "#3B5BDB",
                   border: "2px solid #1a1a1a",
                   boxShadow: "3px 3px 0px #1a1a1a",
+                  fontSize: "15px",
                 }}
               >
-                <Mail className="w-4 h-4" /> lvithong31@gmail.com
+                <Mail className="w-5 h-5 flex-shrink-0" />
+                <span>lvithong31@gmail.com</span>
               </motion.a>
-              <div className="grid grid-cols-3 gap-2.5">
+
+              {/* social icons — cao hơn */}
+              <div className="grid grid-cols-3 gap-3">
                 {[
                   {
                     href: "https://linkedin.com",
                     label: "LinkedIn",
-                    icon: <Linkedin className="w-5 h-5" />,
+                    icon: <Linkedin className="w-6 h-6" />,
                   },
                   {
                     href: "https://behance.net",
                     label: "Behance",
-                    icon: <span className="font-black text-sm">Bē</span>,
+                    icon: (
+                      <span className="font-black text-lg leading-none">
+                        Bē
+                      </span>
+                    ),
                   },
                   {
                     href: "https://github.com",
                     label: "GitHub",
-                    icon: <Github className="w-5 h-5" />,
+                    icon: <Github className="w-6 h-6" />,
                   },
                 ].map((s) => (
                   <motion.a
@@ -443,11 +480,13 @@ export default function About() {
                     aria-label={s.label}
                     whileHover={{ scale: 1.06, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center justify-center py-3 rounded-xl text-white"
+                    className="flex items-center justify-center rounded-2xl text-white"
                     style={{
                       background: "#3B5BDB",
                       border: "2px solid #1a1a1a",
                       boxShadow: "2px 2px 0px #1a1a1a",
+                      paddingTop: "18px",
+                      paddingBottom: "18px",
                     }}
                   >
                     {s.icon}

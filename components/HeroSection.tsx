@@ -46,10 +46,7 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `
-          linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px)
-        `,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
@@ -81,7 +78,7 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* headline fills middle */}
+        {/* headline */}
         <motion.div
           style={{ y: headY }}
           className="flex-1 flex items-center justify-center px-4"
@@ -106,55 +103,86 @@ export default function HeroSection() {
           </motion.h1>
         </motion.div>
 
-        {/* ── BOTTOM: avatar LEFT, arrow, description RIGHT ── */}
+        {/* ── BOTTOM ROW: text LEFT · arrow · avatar RIGHT (ref style) ── */}
         <motion.div style={{ y: bottomY }} className="w-full pb-10 px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="max-w-5xl mx-auto flex items-end justify-start gap-8"
+            className="max-w-5xl mx-auto flex items-end justify-end gap-5"
           >
-            {/* ✅ avatar LEFT */}
-            <motion.div
-              initial={{ rotate: -6 }}
-              whileHover={{ rotate: 0, scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="flex-shrink-0"
-            >
-              <div
-                className="w-[100px] h-[120px] rounded-2xl overflow-hidden shadow-xl"
-                style={{ border: "3px solid #fff" }}
-              >
-                {/* 👉 Replace: <Image src="/avatar.jpg" alt="Viet Hoang" fill className="object-cover" /> */}
-                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
-                  <span
-                    className="text-white font-black text-4xl"
-                    style={{ fontFamily: "'Georgia', serif" }}
-                  >
-                    V
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+            {/* ── intro text + buttons ── */}
+            <div className="text-left max-w-[250px] mb-3">
+              <p className="text-neutral-500 text-sm leading-relaxed mb-5">
+                Hi, I&apos;m{" "}
+                <span
+                  className="font-black"
+                  style={{
+                    color: "#3B5BDB",
+                    textShadow: "1px 1px 0px rgba(59,91,219,0.18)",
+                  }}
+                >
+                  Viet Hoang
+                </span>{" "}
+                and I design intuitive, user-centered experiences that simplify
+                complexity.
+              </p>
 
-            {/* curved arrow pointing left→right toward description */}
+              <div className="flex items-center gap-2 flex-wrap">
+                {/* View Work — blue filled */}
+                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="/work"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black rounded-full"
+                    style={{
+                      background: "#3B5BDB",
+                      color: "#fff",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "3px 3px 0px #1a1a1a",
+                      fontFamily: "'Georgia', serif",
+                    }}
+                  >
+                    View Work <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </motion.div>
+
+                {/* Let's Talk — orange outlined */}
+                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="/#contact"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black rounded-full"
+                    style={{
+                      background: "#F5A623",
+                      color: "#1a1a1a",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "3px 3px 0px #1a1a1a",
+                      fontFamily: "'Georgia', serif",
+                    }}
+                  >
+                    Let&apos;s Talk ✦
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* curved arrow pointing to avatar */}
             <svg
-              className="flex-shrink-0 text-[#1a1a1a] mb-6"
+              className="flex-shrink-0 mb-10"
               width="52"
-              height="40"
-              viewBox="0 0 52 40"
+              height="44"
+              viewBox="0 0 52 44"
               fill="none"
             >
               <path
-                d="M48 4 C38 4, 14 20, 4 36"
-                stroke="currentColor"
+                d="M4 8 C16 6, 38 22, 48 40"
+                stroke="#1a1a1a"
                 strokeWidth="2.2"
                 strokeLinecap="round"
                 fill="none"
               />
               <path
-                d="M10 30 L4 36 L12 36"
-                stroke="currentColor"
+                d="M42 34 L48 40 L40 40"
+                stroke="#1a1a1a"
                 strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -162,44 +190,36 @@ export default function HeroSection() {
               />
             </svg>
 
-            {/* ✅ description RIGHT of avatar */}
-            <div className="text-left max-w-[260px] mb-2">
-              <p className="text-neutral-600 text-sm leading-relaxed mb-4">
-                Hi, I&apos;m{" "}
-                <strong className="text-[#1a1a1a] font-bold">Viet Hoang</strong>{" "}
-                and I design intuitive, user-centered experiences that simplify
-                complexity.
-              </p>
-              <div className="flex items-center gap-2.5 flex-wrap">
-                <motion.div
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  <Link
-                    href="/work"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1a1a1a] text-white text-xs font-bold rounded-full"
+            {/* ── avatar card, tilted right ── */}
+            <motion.div
+              initial={{ rotate: 6 }}
+              whileHover={{ rotate: 0, scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              className="flex-shrink-0"
+            >
+              <div
+                className="w-[118px] h-[148px] rounded-3xl overflow-hidden"
+                style={{
+                  border: "3px solid #fff",
+                  boxShadow: "5px 5px 0px #3B5BDB",
+                }}
+              >
+                {/* 👉 Replace: <Image src="/avatar.jpg" alt="Viet Hoang" fill className="object-cover" /> */}
+                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
+                  <span
+                    className="text-white font-black text-5xl"
+                    style={{ fontFamily: "'Georgia', serif" }}
                   >
-                    View Work <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  <Link
-                    href="/#contact"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 border-2 border-[#1a1a1a] text-[#1a1a1a] text-xs font-bold rounded-full hover:bg-[#1a1a1a] hover:text-white transition-colors"
-                  >
-                    Let&apos;s Talk
-                  </Link>
-                </motion.div>
+                    V
+                  </span>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* stars */}
+      {/* spinning stars */}
       <motion.div
         className="absolute top-[22%] left-[7%] text-[#3B5BDB] select-none pointer-events-none"
         initial={{ opacity: 0, scale: 0 }}
@@ -228,7 +248,7 @@ export default function HeroSection() {
         ✦
       </motion.div>
 
-      {/* scroll indicator */}
+      {/* scroll button */}
       <motion.div
         className="absolute bottom-8 left-8 z-20"
         initial={{ opacity: 0 }}

@@ -42,6 +42,15 @@ export function Header() {
     }
   };
 
+  // ✅ Logo click: scroll to top on home, navigate to home on other pages
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    // else: default Link behavior navigates to "/"
+  };
+
   return (
     <>
       <motion.header
@@ -58,7 +67,7 @@ export function Header() {
         <div className="max-w-5xl mx-auto px-6">
           <nav className="flex items-center justify-between h-16 md:h-20">
             {/* ── Logo ──────────────────── */}
-            <Link href="/" className="relative z-50">
+            <Link href="/" className="relative z-50" onClick={handleLogoClick}>
               <motion.div
                 whileHover={{ scale: 1.12, rotate: -8 }}
                 whileTap={{ scale: 0.93 }}
@@ -91,7 +100,6 @@ export function Header() {
 
                 const innerContent = (
                   <>
-                    {/* sliding bg */}
                     <AnimatePresence>
                       {(isHov || isActive) && (
                         <motion.span
@@ -112,7 +120,6 @@ export function Header() {
                     </AnimatePresence>
 
                     <span className="relative z-10 flex items-center gap-1.5">
-                      {/* animated arrow */}
                       <motion.span
                         animate={{
                           opacity: isActive || isHov ? 1 : 0.3,
@@ -134,7 +141,6 @@ export function Header() {
                       </motion.span>
                     </span>
 
-                    {/* active underline */}
                     {isActive && (
                       <motion.span
                         layoutId="navUnderline"

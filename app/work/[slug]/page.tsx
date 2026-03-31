@@ -1,10 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Mail, Linkedin, Github } from "lucide-react";
 
-/* ══════════════════════════════════════════
-   TYPES
-══════════════════════════════════════════ */
 interface ProjectSection {
   number: number;
   title: string;
@@ -24,9 +21,6 @@ interface Project {
   sections: ProjectSection[];
 }
 
-/* ══════════════════════════════════════════
-   DATA
-══════════════════════════════════════════ */
 const projectsData: Record<string, Project> = {
   "PandaPlay-movie-app": {
     title: "Movie Streaming App with Explore-style Discover & Live TV",
@@ -93,7 +87,6 @@ const projectsData: Record<string, Project> = {
       },
     ],
   },
-
   "teaee-dashboard": {
     title: "Teaee - Tea Ordering System",
     subtitle:
@@ -161,7 +154,6 @@ const projectsData: Record<string, Project> = {
       },
     ],
   },
-
   "LearnSpace-platform": {
     title: "LearnSpace Platform",
     subtitle:
@@ -196,9 +188,6 @@ const projectsData: Record<string, Project> = {
   },
 };
 
-/* ══════════════════════════════════════════
-   COMPONENT
-══════════════════════════════════════════ */
 export default async function ProjectDetail({
   params,
 }: {
@@ -210,7 +199,6 @@ export default async function ProjectDetail({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* subtle grid */}
       <div
         className="fixed inset-0 pointer-events-none opacity-20"
         style={{
@@ -219,7 +207,7 @@ export default async function ProjectDetail({
         }}
       />
 
-      {/* ── sticky back button ─────────────── */}
+      {/* sticky back */}
       <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-[#ebebeb]">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link
@@ -243,10 +231,9 @@ export default async function ProjectDetail({
         </div>
       </div>
 
-      {/* ── Hero section ───────────────────── */}
+      {/* Hero */}
       <div className="max-w-5xl mx-auto px-6 pt-16 pb-12 relative z-10">
         <div className="mb-10">
-          {/* title */}
           <h1
             className="font-black text-[#1a1a1a] leading-tight mb-6"
             style={{
@@ -259,10 +246,8 @@ export default async function ProjectDetail({
           <p className="text-neutral-500 text-[16px] leading-relaxed max-w-3xl mb-10">
             {project.subtitle}
           </p>
-
-          {/* hero image */}
           <div
-            className="rounded-2xl overflow-hidden shadow-2xl"
+            className="rounded-2xl overflow-hidden"
             style={{
               background: project.accentColor,
               border: "2px solid #1a1a1a",
@@ -277,9 +262,8 @@ export default async function ProjectDetail({
           </div>
         </div>
 
-        {/* ── info + sections grid ─────────── */}
         <div className="grid lg:grid-cols-4 gap-12 mt-16">
-          {/* sidebar */}
+          {/* sidebar — larger info text */}
           <div className="lg:col-span-1">
             <div className="lg:sticky lg:top-24">
               <div
@@ -296,10 +280,12 @@ export default async function ProjectDetail({
                 <div className="space-y-5">
                   {Object.entries(project.info).map(([key, value]) => (
                     <div key={key}>
-                      <p className="text-xs font-black uppercase tracking-wider text-neutral-400 mb-0.5">
+                      {/* ✅ smaller label */}
+                      <p className="text-[10px] font-black uppercase tracking-wider text-neutral-400 mb-0.5">
                         {key}
                       </p>
-                      <p className="text-sm font-semibold text-[#1a1a1a]">
+                      {/* ✅ larger value */}
+                      <p className="text-base font-bold text-[#1a1a1a]">
                         {value}
                       </p>
                     </div>
@@ -313,7 +299,6 @@ export default async function ProjectDetail({
           <div className="lg:col-span-3 space-y-16">
             {project.sections.map((section) => (
               <div key={section.number} className="space-y-5">
-                {/* section title with number badge */}
                 <div className="flex items-center gap-3">
                   <span
                     className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black text-white"
@@ -328,13 +313,11 @@ export default async function ProjectDetail({
                     {section.title}
                   </h2>
                 </div>
-
                 {section.content && (
                   <p className="text-[15px] text-neutral-600 leading-relaxed pl-11 whitespace-pre-line">
                     {section.content}
                   </p>
                 )}
-
                 {section.image && (
                   <div
                     className="rounded-2xl overflow-hidden"
@@ -350,7 +333,6 @@ export default async function ProjectDetail({
                     />
                   </div>
                 )}
-
                 {section.images?.map((img, i) => (
                   <div
                     key={i}
@@ -373,39 +355,134 @@ export default async function ProjectDetail({
         </div>
       </div>
 
-      {/* ── Footer CTA ─────────────────────── */}
-      <div className="relative z-10 border-t-2 border-[#ebebeb] mt-24 bg-[#ebebeb]">
-        <div className="max-w-5xl mx-auto px-6 py-20 text-center">
-          <span className="inline-block text-[#3B5BDB] text-2xl mb-4 select-none">
-            ✦
-          </span>
-          <h2
-            className="text-3xl font-black text-[#1a1a1a] mb-3"
-            style={{ fontFamily: "'Georgia', serif" }}
-          >
-            Interested?
-          </h2>
-          <p className="text-neutral-500 mb-8">
-            Check out more work or get in touch.
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#3B5BDB] text-white font-bold rounded-full hover:opacity-90 transition-opacity"
-            >
-              More Projects <ArrowUpRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 font-bold rounded-full transition-colors"
+      {/* ✅ Footer — white bg, contact style, avatar LEFT + buttons RIGHT */}
+      <div className="relative z-10 border-t-2 border-[#ebebeb] mt-24 bg-white overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+            backgroundSize: "52px 52px",
+          }}
+        />
+        <div className="relative z-10 max-w-lg mx-auto px-6 py-24">
+          {/* heading — smaller than homepage */}
+          <div className="text-center mb-10">
+            <span className="inline-block text-[#3B5BDB] text-xl mb-3 select-none">
+              ✦
+            </span>
+            <h2
+              className="font-black text-[#1a1a1a] leading-tight mb-1"
               style={{
-                background: "white",
-                border: "2px solid #1a1a1a",
-                color: "#1a1a1a",
-                boxShadow: "3px 3px 0px #1a1a1a",
+                fontSize: "clamp(2rem, 5vw, 3.2rem)",
+                fontFamily: "'Georgia', serif",
               }}
             >
-              Get in Touch
+              Don&apos;t be a{" "}
+              <span
+                className="inline-block px-3 py-0.5 rounded-xl align-middle"
+                style={{
+                  background: "#F5A623",
+                  color: "#1a1a1a",
+                  border: "2px solid #1a1a1a",
+                  boxShadow: "3px 3px 0px #1a1a1a",
+                  fontFamily: "'Georgia', serif",
+                  fontSize: "clamp(1.2rem, 3vw, 2rem)",
+                }}
+              >
+                Stranger
+              </span>
+            </h2>
+            <h2
+              className="font-black text-[#1a1a1a] leading-tight"
+              style={{
+                fontSize: "clamp(2rem, 5vw, 3.2rem)",
+                fontFamily: "'Georgia', serif",
+              }}
+            >
+              let&apos;s Chat
+            </h2>
+          </div>
+
+          {/* avatar LEFT + contact RIGHT */}
+          <div className="flex items-center gap-4 mb-8">
+            <div
+              className="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden"
+              style={{
+                border: "3px solid #1a1a1a",
+                boxShadow: "4px 4px 0px #1a1a1a",
+              }}
+            >
+              <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
+                <span
+                  className="text-white font-black text-2xl"
+                  style={{ fontFamily: "'Georgia', serif" }}
+                >
+                  V
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 flex-1">
+              <a
+                href="mailto:lvithong31@gmail.com"
+                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-white text-sm hover:opacity-90 transition-opacity"
+                style={{
+                  background: "#3B5BDB",
+                  border: "2px solid #1a1a1a",
+                  boxShadow: "3px 3px 0px #1a1a1a",
+                }}
+              >
+                <Mail className="w-4 h-4" /> lvithong31@gmail.com
+              </a>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  {
+                    href: "https://linkedin.com",
+                    label: "LinkedIn",
+                    icon: <Linkedin className="w-5 h-5" />,
+                  },
+                  {
+                    href: "https://behance.net",
+                    label: "Behance",
+                    icon: <span className="font-black text-sm">Bē</span>,
+                  },
+                  {
+                    href: "https://github.com",
+                    label: "GitHub",
+                    icon: <Github className="w-5 h-5" />,
+                  },
+                ].map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="flex items-center justify-center py-3.5 rounded-2xl text-white hover:opacity-90 transition-opacity"
+                    style={{
+                      background: "#3B5BDB",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "2px 2px 0px #1a1a1a",
+                    }}
+                  >
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* More projects */}
+          <div className="text-center">
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 px-6 py-3 font-black rounded-full text-[#1a1a1a] text-sm bg-white hover:bg-[#ebebeb] transition-colors"
+              style={{
+                border: "2px solid #1a1a1a",
+                boxShadow: "3px 3px 0px #1a1a1a",
+                fontFamily: "'Georgia', serif",
+              }}
+            >
+              More Projects <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
