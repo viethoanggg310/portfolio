@@ -538,7 +538,7 @@ export default function Home() {
                     icon: <Linkedin className="w-6 h-6" />,
                   },
                   {
-                    href: "https://behance.net",
+                    href: "https://www.behance.net/vhoang310",
                     label: "Behance",
                     icon: (
                       <span className="font-black text-lg leading-none">
