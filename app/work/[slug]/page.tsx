@@ -263,7 +263,7 @@ export default async function ProjectDetail({
         </div>
 
         <div className="grid lg:grid-cols-4 gap-12 mt-16">
-          {/* sidebar — larger info text */}
+          {/* sidebar */}
           <div className="lg:col-span-1">
             <div className="lg:sticky lg:top-24">
               <div
@@ -280,11 +280,9 @@ export default async function ProjectDetail({
                 <div className="space-y-5">
                   {Object.entries(project.info).map(([key, value]) => (
                     <div key={key}>
-                      {/* ✅ smaller label */}
                       <p className="text-[10px] font-black uppercase tracking-wider text-neutral-400 mb-0.5">
                         {key}
                       </p>
-                      {/* ✅ larger value */}
                       <p className="text-base font-bold text-[#1a1a1a]">
                         {value}
                       </p>
@@ -355,47 +353,69 @@ export default async function ProjectDetail({
         </div>
       </div>
 
-      {/* ✅ Footer — white bg, contact style, avatar LEFT + buttons RIGHT */}
+      {/* ══════════════════════════════════════════
+          FOOTER CONTACT — same style as homepage
+      ══════════════════════════════════════════ */}
       <div className="relative z-10 border-t-2 border-[#ebebeb] mt-24 bg-white overflow-hidden">
         <div
-          className="absolute inset-0 pointer-events-none opacity-20"
+          className="absolute inset-0 pointer-events-none opacity-[0.18]"
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)`,
             backgroundSize: "52px 52px",
           }}
         />
-        <div className="relative z-10 max-w-lg mx-auto px-6 py-24">
-          {/* heading — smaller than homepage */}
-          <div className="text-center mb-10">
-            <span className="inline-block text-[#3B5BDB] text-xl mb-3 select-none">
-              ✦
-            </span>
-            <h2
-              className="font-black text-[#1a1a1a] leading-tight mb-1"
-              style={{
-                fontSize: "clamp(2rem, 5vw, 3.2rem)",
-                fontFamily: "'Georgia', serif",
-              }}
-            >
-              Don&apos;t be a{" "}
+
+        <div className="relative z-10 max-w-lg mx-auto px-6 py-20">
+          {/* heading — nhỏ hơn homepage một chút */}
+          <div className="mb-10">
+            {/* line 1 */}
+            <div className="flex items-start justify-center gap-2 mb-0.5">
+              <h2
+                className="font-black text-[#1a1a1a] leading-[1.05]"
+                style={{
+                  fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
+                  fontFamily: "'Georgia', serif",
+                }}
+              >
+                Don&apos;t be a
+              </h2>
+              <span className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0">
+                ✦
+              </span>
+            </div>
+
+            {/* line 2: ✌️ + Stranger badge */}
+            <div className="flex items-center justify-center gap-2.5 mb-0.5">
+              {/* <div
+                className="w-9 h-9 rounded-full flex items-center justify-center text-base flex-shrink-0"
+                style={{
+                  background: "#4ade80",
+                  border: "2px solid #1a1a1a",
+                  boxShadow: "2px 2px 0px #1a1a1a",
+                }}
+              >
+                ✌️
+              </div> */}
               <span
-                className="inline-block px-3 py-0.5 rounded-xl align-middle"
+                className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
                 style={{
                   background: "#F5A623",
                   color: "#1a1a1a",
                   border: "2px solid #1a1a1a",
                   boxShadow: "3px 3px 0px #1a1a1a",
                   fontFamily: "'Georgia', serif",
-                  fontSize: "clamp(1.2rem, 3vw, 2rem)",
+                  fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
                 }}
               >
                 Stranger
               </span>
-            </h2>
+            </div>
+
+            {/* line 3 */}
             <h2
-              className="font-black text-[#1a1a1a] leading-tight"
+              className="font-black text-[#1a1a1a] leading-[1.05] text-center"
               style={{
-                fontSize: "clamp(2rem, 5vw, 3.2rem)",
+                fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
                 fontFamily: "'Georgia', serif",
               }}
             >
@@ -404,51 +424,75 @@ export default async function ProjectDetail({
           </div>
 
           {/* avatar LEFT + contact RIGHT */}
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-stretch gap-4 mb-8">
+            {/* avatar — tilted, 3D blue shadow */}
             <div
-              className="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden"
-              style={{
-                border: "3px solid #1a1a1a",
-                boxShadow: "4px 4px 0px #1a1a1a",
-              }}
+              className="flex-shrink-0"
+              style={{ transform: "rotate(-5deg)" }}
             >
-              <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
-                <span
-                  className="text-white font-black text-2xl"
-                  style={{ fontFamily: "'Georgia', serif" }}
+              <div
+                className="w-[100px] rounded-2xl overflow-hidden"
+                style={{
+                  minHeight: "136px",
+                  border: "3px solid #1a1a1a",
+                  boxShadow:
+                    "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
+                }}
+              >
+                <div
+                  className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
+                  style={{ minHeight: "136px" }}
                 >
-                  V
-                </span>
+                  <span
+                    className="text-white font-black text-3xl"
+                    style={{ fontFamily: "'Georgia', serif" }}
+                  >
+                    V
+                  </span>
+                </div>
               </div>
             </div>
+
+            {/* contact links */}
             <div className="flex flex-col gap-3 flex-1">
+              {/* email */}
               <a
                 href="mailto:lvithong31@gmail.com"
-                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-white text-sm hover:opacity-90 transition-opacity"
+                className="flex items-center justify-center gap-2.5 px-5 rounded-2xl font-bold text-white w-full hover:opacity-90 transition-opacity"
                 style={{
                   background: "#3B5BDB",
                   border: "2px solid #1a1a1a",
                   boxShadow: "3px 3px 0px #1a1a1a",
+                  fontSize: "15px",
+                  paddingTop: "18px",
+                  paddingBottom: "18px",
                 }}
               >
-                <Mail className="w-4 h-4" /> lvithong31@gmail.com
+                <Mail className="w-5 h-5 flex-shrink-0" />
+                <span>lvithong31@gmail.com</span>
               </a>
+
+              {/* socials */}
               <div className="grid grid-cols-3 gap-3">
                 {[
                   {
                     href: "https://linkedin.com",
                     label: "LinkedIn",
-                    icon: <Linkedin className="w-5 h-5" />,
+                    icon: <Linkedin className="w-6 h-6" />,
                   },
                   {
                     href: "https://behance.net",
                     label: "Behance",
-                    icon: <span className="font-black text-sm">Bē</span>,
+                    icon: (
+                      <span className="font-black text-lg leading-none">
+                        Bē
+                      </span>
+                    ),
                   },
                   {
                     href: "https://github.com",
                     label: "GitHub",
-                    icon: <Github className="w-5 h-5" />,
+                    icon: <Github className="w-6 h-6" />,
                   },
                 ].map((s) => (
                   <a
@@ -457,11 +501,13 @@ export default async function ProjectDetail({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="flex items-center justify-center py-3.5 rounded-2xl text-white hover:opacity-90 transition-opacity"
+                    className="flex items-center justify-center rounded-2xl text-white hover:opacity-90 transition-opacity"
                     style={{
                       background: "#3B5BDB",
                       border: "2px solid #1a1a1a",
                       boxShadow: "2px 2px 0px #1a1a1a",
+                      paddingTop: "18px",
+                      paddingBottom: "18px",
                     }}
                   >
                     {s.icon}
@@ -471,7 +517,7 @@ export default async function ProjectDetail({
             </div>
           </div>
 
-          {/* More projects */}
+          {/* More Projects button */}
           <div className="text-center">
             <Link
               href="/work"
