@@ -2,104 +2,127 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Mail, Linkedin, Globe, ArrowUpRight } from "lucide-react";
-import { personalInfo, socialLinks } from "@/constants/profile";
-
-const iconMap: { [key: string]: React.ElementType } = {
-  Mail,
-  Linkedin,
-  Globe,
-  Dribbble: Globe,
-};
+import { Mail, Linkedin, Github, ArrowUpRight } from "lucide-react";
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="border-t border-neutral-200 bg-neutral-50">
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="relative z-50">
+    <footer className="bg-white border-t-2 border-[#1a1a1a]">
+      <div className="max-w-4xl mx-auto px-6 py-10">
+        {/* ── Main row ──────────────────── */}
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-8 mb-8">
+          {/* Brand + tagline */}
+          <div className="flex items-center gap-3">
+            <Link href="/">
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.1, rotate: -6 }}
+                whileTap={{ scale: 0.92 }}
+                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: "#1a1a1a",
+                  border: "2px solid #1a1a1a",
+                  boxShadow: "2px 2px 0px #3B5BDB",
+                }}
               >
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold text-xl">
-                  Viet Hoang
+                <span
+                  className="text-white font-black text-sm"
+                  style={{ fontFamily: "'Georgia', serif" }}
+                >
+                  V
                 </span>
-                <span className="text-blue-600">.</span>
               </motion.div>
             </Link>
-            <p className="text-neutral-600 text-sm leading-relaxed">
-              Product Designer crafting thoughtful digital experiences that
-              solve real problems.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-neutral-900 mb-4 uppercase tracking-wider">
-              Navigation
-            </h4>
-            <nav className="flex flex-col gap-2">
-              {[
-                { href: "/work", label: "Case Studies" },
-                { href: "/about", label: "About" },
-                { href: "/resume", label: "Resume" },
-                { href: "/contact", label: "Contact" },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-neutral-600 hover:text-primary-600 transition-colors text-sm"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-sm font-semibold text-neutral-900 mb-4 uppercase tracking-wider">
-              Let's Connect
-            </h4>
-            <div className="flex flex-col gap-3">
-              {socialLinks.map((link) => {
-                const Icon = iconMap[link.icon] || Globe;
-                return (
-                  <motion.a
-                    key={link.name}
-                    href={link.url}
-                    target={
-                      link.url.startsWith("mailto") ? undefined : "_blank"
-                    }
-                    rel={
-                      link.url.startsWith("mailto")
-                        ? undefined
-                        : "noopener noreferrer"
-                    }
-                    whileHover={{ x: 4 }}
-                    className="flex items-center gap-2 text-neutral-600 hover:text-primary-600 transition-colors text-sm group"
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{link.name}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </motion.a>
-                );
-              })}
+            <div>
+              <p
+                className="font-black text-[#1a1a1a] text-sm"
+                style={{ fontFamily: "'Georgia', serif" }}
+              >
+                Viet Hoang
+              </p>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-xs text-neutral-400 font-semibold">
+                  Available for internship
+                </span>
+              </div>
             </div>
+          </div>
+
+          {/* Nav links */}
+          {/* <nav className="flex flex-wrap gap-x-5 gap-y-1.5">
+            {[
+              { href: "/work", label: "Work" },
+              { href: "/about", label: "About" },
+              { href: "/#contact", label: "Contact" },
+            ].map((link) => (
+              <Link key={link.href} href={link.href}>
+                <motion.span
+                  whileHover={{ x: 3 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                  className="flex items-center gap-1 text-sm font-semibold text-neutral-500 hover:text-[#3B5BDB] transition-colors"
+                >
+                  <span className="text-[#3B5BDB] text-xs">↗</span>
+                  {link.label}
+                </motion.span>
+              </Link>
+            ))}
+          </nav> */}
+
+          {/* Social icons */}
+          <div className="flex items-center gap-2">
+            {[
+              {
+                href: "mailto:lvithong31@gmail.com",
+                label: "Email",
+                icon: <Mail className="w-4 h-4" />,
+              },
+              {
+                href: "https://linkedin.com",
+                label: "LinkedIn",
+                icon: <Linkedin className="w-4 h-4" />,
+              },
+              {
+                href: "https://behance.net",
+                label: "Behance",
+                icon: <span className="font-black text-xs">Bē</span>,
+              },
+              {
+                href: "https://github.com",
+                label: "GitHub",
+                icon: <Github className="w-4 h-4" />,
+              },
+            ].map((s) => (
+              <motion.a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith("mailto") ? undefined : "_blank"}
+                rel={
+                  s.href.startsWith("mailto")
+                    ? undefined
+                    : "noopener noreferrer"
+                }
+                aria-label={s.label}
+                whileHover={{ scale: 1.12, y: -2 }}
+                whileTap={{ scale: 0.92 }}
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-neutral-500 hover:text-[#3B5BDB] transition-colors"
+                style={{ border: "1.5px solid #e0e0e0" }}
+              >
+                {s.icon}
+              </motion.a>
+            ))}
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="pt-8 border-t border-neutral-200 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-neutral-500">
-            © {currentYear} VietHoang. All rights reserved.
+        {/* ── Bottom bar ────────────────── */}
+        <div className="pt-6 border-t border-[#ebebeb] flex flex-col sm:flex-row justify-between items-center gap-2">
+          <p className="text-xs text-neutral-400 font-semibold">
+            © {new Date().getFullYear()} Viet Hoang. All rights reserved.
           </p>
-          <p className="text-sm text-neutral-400">Designed & built with 💙</p>
+          <p
+            className="text-xs text-neutral-400 font-black"
+            style={{ fontFamily: "'Georgia', serif" }}
+          >
+            Designed & built with ✦
+          </p>
         </div>
       </div>
     </footer>

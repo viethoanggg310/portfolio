@@ -1,240 +1,407 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Filter } from "lucide-react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { Filter, ArrowUpRight, Mail, Linkedin, Github } from "lucide-react";
 import Link from "next/link";
+import { SectionTitle } from "@/components/SectionTitle";
 
-// Types
-interface Project {
-  id: number;
-  title: string;
-  slug: string; // ← THÊM SLUG
-  category: string;
-  description: string;
-  image: string;
-  tags: string[];
-  year: string;
-}
-
-// ✏️ PROJECTS DATA - ĐÃ THÊM SLUG
-const projects: Project[] = [
+const projects = [
   {
     id: 1,
     title: "PandaPlay",
-    slug: "PandaPlay-movie-app", // ← PHẢI KHỚP VỚI [slug]/page.tsx
+    slug: "PandaPlay-movie-app",
     category: "App Design",
     description:
       "A modern movie streaming app focused on personalized recommendations and seamless viewing experience.",
     image: "/images/cover.png",
     tags: ["UI/UX", "Mobile", "Figma"],
     year: "2026",
+    accentBg: "#1a1a2e",
   },
   {
     id: 2,
     title: "Teaee",
-    slug: "teaee-dashboard", // ← PHẢI KHỚP VỚI [slug]/page.tsx
+    slug: "teaee-dashboard",
     category: "Web Design",
     description:
       "A dual-interface ordering system designed for both customers and staff, streamlining in-store purchases.",
     image: "/images/cover teaee.png",
     tags: ["UI/UX", "Web App", "Ordering System", "Dashboard"],
     year: "2026",
+    accentBg: "#e8f5e4",
   },
   {
     id: 3,
     title: "LearnSpace",
-    slug: "LearnSpace-platform", // ← PHẢI KHỚP VỚI [slug]/page.tsx
+    slug: "LearnSpace-platform",
     category: "App Design",
     description:
       "Health and fitness app with personalized workout plans and progress tracking.",
     image: "/projects/project3.jpg",
     tags: ["UI/UX", "Mobile", "Health"],
     year: "2023",
+    accentBg: "#e8f0ff",
   },
 ];
 
 const categories = ["All", "App Design", "Web Design"];
 
-export default function Work() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+const cardVariants: Variants = {
+  offscreen: { opacity: 0, y: 32, scale: 0.96 },
+  onscreen: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
-  const filteredProjects =
-    selectedCategory === "All"
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <motion.div
+      custom={index}
+      variants={cardVariants}
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true, amount: 0.1 }}
+      layout
+    >
+      <Link
+        href={`/work/${project.slug}`}
+        className="group block"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <motion.div
+          animate={{
+            y: hovered ? -8 : 0,
+            boxShadow: hovered ? "8px 8px 0px #3B5BDB" : "4px 4px 0px #1a1a1a",
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
+          className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-3"
+          style={{ background: project.accentBg, border: "2px solid #1a1a1a" }}
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+          <motion.div
+            animate={{ opacity: hovered ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 bg-[#1a1a1a]/60 flex items-center justify-center"
+          >
+            <motion.div
+              animate={{
+                scale: hovered ? 1 : 0.8,
+                y: hovered ? 0 : 14,
+                opacity: hovered ? 1 : 0,
+              }}
+              transition={{ type: "spring", stiffness: 320, damping: 22 }}
+              className="flex flex-col items-center gap-2"
+            >
+              <div
+                className="w-14 h-14 rounded-full bg-white flex items-center justify-center"
+                style={{ border: "2px solid #1a1a1a" }}
+              >
+                <ArrowUpRight className="w-6 h-6 text-[#1a1a1a]" />
+              </div>
+              <span className="text-white font-bold text-sm bg-white/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
+                View Case Study
+              </span>
+            </motion.div>
+          </motion.div>
+          <motion.div
+            animate={{ opacity: hovered ? 0 : 0.35 }}
+            className="absolute top-4 left-12 text-white text-base select-none"
+          >
+            ✦
+          </motion.div>
+          <motion.div
+            animate={{ y: hovered ? -2 : 0 }}
+            className="absolute top-3 right-3"
+          >
+            <span
+              className="inline-block px-3 py-1 rounded-full text-xs font-black"
+              style={{
+                background: "#F5A623",
+                color: "#1a1a1a",
+                border: "1.5px solid #1a1a1a",
+                boxShadow: "2px 2px 0px #1a1a1a",
+                fontFamily: "'Georgia', serif",
+              }}
+            >
+              {project.year}
+            </span>
+          </motion.div>
+        </motion.div>
+        <p className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-0.5">
+          {project.category}
+        </p>
+        <motion.h3
+          animate={{ color: hovered ? "#3B5BDB" : "#1a1a1a" }}
+          transition={{ duration: 0.2 }}
+          className="text-xl font-black mb-1"
+          style={{ fontFamily: "'Georgia', serif" }}
+        >
+          {project.title}
+        </motion.h3>
+        <p className="text-sm text-neutral-500 leading-relaxed mb-2.5">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <motion.span
+              key={tag}
+              animate={{
+                background: hovered ? "#3B5BDB" : "#f0f0f0",
+                color: hovered ? "#fff" : "#1a1a1a",
+              }}
+              transition={{ duration: 0.2 }}
+              className="px-3 py-1 text-xs font-semibold rounded-full"
+              style={{ border: "1.5px solid #d0d0d0" }}
+            >
+              {tag}
+            </motion.span>
+          ))}
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
+export default function Work() {
+  const [selected, setSelected] = useState("All");
+  const filtered =
+    selected === "All"
       ? projects
-      : projects.filter((project) => project.category === selectedCategory);
+      : projects.filter((p) => p.category === selected);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <section className="px-6 py-20 md:px-12 lg:px-24 max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
-            Case Studies
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl">
-            Thoughtful UX decisions. Clean UI execution.
-          </p>
-        </motion.div>
+      <div
+        className="fixed inset-0 pointer-events-none opacity-[0.12]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)`,
+          backgroundSize: "52px 52px",
+        }}
+      />
 
-        {/* Filter */}
+      {/* Header — NO border */}
+      <section className="relative z-10 px-6 pt-24 pb-8 max-w-5xl mx-auto">
+        <SectionTitle
+          badge="Case ✦ Studies"
+          badgeVariant="orange"
+          title="Case Studies"
+          description="Thoughtful UX decisions. Clean UI execution."
+        />
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 flex flex-wrap gap-3 items-center"
+          transition={{ duration: 0.45, delay: 0.18 }}
+          className="mt-5 flex flex-wrap gap-2.5 items-center"
         >
-          <Filter className="w-5 h-5 text-gray-400" />
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
+          <Filter className="w-4 h-4 text-neutral-400" />
+          {categories.map((cat) => (
+            <motion.button
+              key={cat}
+              onClick={() => setSelected(cat)}
+              whileHover={{ scale: 1.05, y: -1 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-5 py-2 rounded-full text-sm font-black"
+              style={
+                selected === cat
+                  ? {
+                      background: "#1a1a1a",
+                      color: "#fff",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "3px 3px 0px #3B5BDB",
+                      fontFamily: "'Georgia', serif",
+                    }
+                  : {
+                      background: "#fff",
+                      color: "#888",
+                      border: "2px solid #d0d0d0",
+                      fontFamily: "'Georgia', serif",
+                    }
+              }
             >
-              {category}
-            </button>
+              {cat}
+            </motion.button>
           ))}
         </motion.div>
       </section>
 
-      {/* Projects Grid */}
-      <section className="px-6 pb-20 md:px-12 lg:px-24 max-w-7xl mx-auto">
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
-        >
+      {/* Grid — NO border */}
+      <section className="relative z-10 px-6 pb-16 max-w-5xl mx-auto">
+        <motion.div layout className="grid sm:grid-cols-2 gap-8">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                {/* ✅ WRAP CARD VỚI LINK */}
-                <Link
-                  href={`/work/${project.slug}`}
-                  className="block group cursor-pointer"
-                >
-                  {/* Image Container */}
-                  <div className="relative overflow-hidden rounded-2xl bg-gray-100 aspect-[4/3] mb-6">
-                    <motion.div
-                      animate={{
-                        scale: hoveredId === project.id ? 1.05 : 1,
-                      }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
-                      className="w-full h-full"
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                        }}
-                      />
-                    </motion.div>
-
-                    {/* Overlay on Hover */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: hoveredId === project.id ? 1 : 0 }}
-                      className="absolute inset-0 bg-black/40 flex items-center justify-center"
-                    >
-                      <span className="text-white font-semibold text-lg">
-                        View Project
-                      </span>
-                    </motion.div>
-
-                    {/* Year Badge */}
-                    <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-gray-900">
-                      {project.year}
-                    </div>
-                  </div>
-
-                  {/* Project Info */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm text-gray-500 font-medium">
-                        {project.category}
-                      </span>
-                    </div>
-
-                    <h3 className="text-2xl font-bold text-gray-900 group-hover:text-gray-600 transition-colors">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-gray-600 leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
+            {filtered.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </AnimatePresence>
         </motion.div>
-
-        {/* Empty State */}
-        {filteredProjects.length === 0 && (
+        {filtered.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-20"
+            className="text-center py-16"
           >
-            <p className="text-xl text-gray-400">
-              No projects found in this category
+            <p className="text-neutral-400 text-lg font-medium">
+              No projects in this category yet.
             </p>
           </motion.div>
         )}
       </section>
 
-      {/* CTA */}
-      <section className="px-6 py-20 md:px-12 lg:px-24 max-w-7xl mx-auto border-t border-gray-200">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Let's build meaningful products together!
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            I'm currently looking for an internship or junior UX/UI position.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block px-8 py-4 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-700 transition-colors"
+      {/* Contact — NO border */}
+      <section className="relative z-10 px-6 py-16 bg-white overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-25"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px)`,
+            backgroundSize: "52px 52px",
+          }}
+        />
+        <div className="relative z-10 max-w-md mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            Contact Me
-          </Link>
-        </motion.div>
+            <motion.span
+              className="inline-block text-[#3B5BDB] text-xl mb-3 select-none"
+              animate={{ rotate: [0, 20, -20, 0] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              ✦
+            </motion.span>
+            <h2
+              className="font-black text-[#1a1a1a] leading-tight mb-1"
+              style={{
+                fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                fontFamily: "'Georgia', serif",
+              }}
+            >
+              Don&apos;t be a{" "}
+              <span
+                className="inline-block px-3 py-0.5 rounded-xl align-middle"
+                style={{
+                  background: "#F5A623",
+                  color: "#1a1a1a",
+                  border: "2px solid #1a1a1a",
+                  boxShadow: "3px 3px 0px #1a1a1a",
+                  fontFamily: "'Georgia', serif",
+                  fontSize: "clamp(1.2rem, 3vw, 2rem)",
+                }}
+              >
+                Stranger
+              </span>
+            </h2>
+            <h2
+              className="font-black text-[#1a1a1a] leading-tight mb-8"
+              style={{
+                fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                fontFamily: "'Georgia', serif",
+              }}
+            >
+              let&apos;s Chat
+            </h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <motion.div
+              initial={{ rotate: -6 }}
+              whileHover={{ rotate: 0, scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 280, damping: 20 }}
+            >
+              <div
+                className="w-20 h-20 rounded-2xl overflow-hidden"
+                style={{
+                  border: "3px solid #1a1a1a",
+                  boxShadow: "4px 4px 0px #1a1a1a",
+                }}
+              >
+                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
+                  <span
+                    className="text-white font-black text-2xl"
+                    style={{ fontFamily: "'Georgia', serif" }}
+                  >
+                    V
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+            <div className="flex flex-col gap-2.5 w-full max-w-xs">
+              <motion.a
+                href="mailto:lvithong31@gmail.com"
+                whileHover={{ scale: 1.02, x: 3 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-white text-sm"
+                style={{
+                  background: "#3B5BDB",
+                  border: "2px solid #1a1a1a",
+                  boxShadow: "3px 3px 0px #1a1a1a",
+                }}
+              >
+                <Mail className="w-4 h-4" /> lvithong31@gmail.com
+              </motion.a>
+              <div className="grid grid-cols-3 gap-2.5">
+                {[
+                  {
+                    href: "https://linkedin.com",
+                    label: "LinkedIn",
+                    icon: <Linkedin className="w-5 h-5" />,
+                  },
+                  {
+                    href: "https://behance.net",
+                    label: "Behance",
+                    icon: <span className="font-black text-sm">Bē</span>,
+                  },
+                  {
+                    href: "https://github.com",
+                    label: "GitHub",
+                    icon: <Github className="w-5 h-5" />,
+                  },
+                ].map((s) => (
+                  <motion.a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center py-3 rounded-xl text-white"
+                    style={{
+                      background: "#3B5BDB",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "2px 2px 0px #1a1a1a",
+                    }}
+                  >
+                    {s.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
     </div>
   );
