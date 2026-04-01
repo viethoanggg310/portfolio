@@ -110,7 +110,7 @@ function ProjectCard({
     const rect = card.getBoundingClientRect();
     const cx = (e.clientX - rect.left) / rect.width - 0.5;
     const cy = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: cy * -14, y: cx * 14 });
+    setTilt({ x: cy * -10, y: cx * 10 });
   };
 
   const handleMouseLeave = () => {
@@ -132,9 +132,10 @@ function ProjectCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleMouseLeave}
-      style={{ perspective: "800px", transformStyle: "preserve-3d" }}
+      style={{ perspective: "900px", transformStyle: "preserve-3d" }}
     >
       <Link href={`/work/${project.slug}`} className="block">
+        {/* ✅ ảnh to hơn: aspect-[4/3] thay vì 16/10 */}
         <motion.div
           animate={{
             rotateX: tilt.x,
@@ -143,7 +144,7 @@ function ProjectCard({
             boxShadow: hovered ? "8px 8px 0px #3B5BDB" : "4px 4px 0px #1a1a1a",
           }}
           transition={{ type: "spring", stiffness: 300, damping: 28 }}
-          className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-3"
+          className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-4"
           style={{
             background: project.accentBg,
             border: "2px solid #1a1a1a",
@@ -160,10 +161,11 @@ function ProjectCard({
               e.currentTarget.style.display = "none";
             }}
           />
+
           <motion.div
             animate={{ y: hovered ? 0 : "100%", opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 bottom-0 h-1/2 flex items-end justify-between p-4"
+            className="absolute inset-x-0 bottom-0 h-1/2 flex items-end justify-between px-5 pb-5"
             style={{
               background:
                 "linear-gradient(to top, rgba(26,26,26,0.92) 0%, transparent 100%)",
@@ -173,15 +175,16 @@ function ProjectCard({
               View Case Study
             </span>
             <div
-              className="w-9 h-9 rounded-full bg-white flex items-center justify-center flex-shrink-0"
+              className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0"
               style={{ border: "2px solid rgba(255,255,255,0.3)" }}
             >
-              <ArrowUpRight className="w-4 h-4 text-[#1a1a1a]" />
+              <ArrowUpRight className="w-5 h-5 text-[#1a1a1a]" />
             </div>
           </motion.div>
+
           <motion.div
             animate={{ opacity: hovered ? 0 : 0.4 }}
-            className="absolute top-3 left-3 text-white text-base select-none"
+            className="absolute top-4 left-4 text-white text-base select-none"
           >
             ✦
           </motion.div>
@@ -190,7 +193,7 @@ function ProjectCard({
             className="absolute top-3 right-3"
           >
             <span
-              className="inline-block px-2.5 py-1 rounded-lg text-xs font-black"
+              className="inline-block px-3 py-1.5 rounded-lg text-xs font-black"
               style={{
                 background: "#F5A623",
                 color: "#1a1a1a",
@@ -204,21 +207,21 @@ function ProjectCard({
           </motion.div>
         </motion.div>
 
-        <p className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-0.5">
+        <p className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-1">
           {project.category} · {project.year}
         </p>
         <motion.h3
           animate={{ color: hovered ? "#3B5BDB" : "#1a1a1a" }}
           transition={{ duration: 0.18 }}
-          className="text-lg font-black mb-1"
+          className="text-lg font-black mb-1.5"
           style={{ fontFamily: "'Georgia', serif" }}
         >
           {project.title}
         </motion.h3>
-        <p className="text-sm text-neutral-500 leading-relaxed mb-2">
+        <p className="text-sm text-neutral-500 leading-relaxed mb-3">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <motion.span
               key={tag}
@@ -227,7 +230,7 @@ function ProjectCard({
                 color: hovered ? "#fff" : "#1a1a1a",
               }}
               transition={{ duration: 0.18 }}
-              className="px-2.5 py-0.5 text-xs font-semibold rounded-full"
+              className="px-3 py-1 text-xs font-semibold rounded-full"
               style={{ border: "1.5px solid #d0d0d0" }}
             >
               {tag}
@@ -255,7 +258,7 @@ function SkillCard({
       viewport={{ once: true }}
       transition={{ delay: index * 0.07 }}
       whileHover={{ y: -4, boxShadow: "4px 4px 0px #3B5BDB" }}
-      className="bg-white rounded-xl p-4"
+      className="bg-white rounded-xl p-5"
       style={{ border: "2px solid #1a1a1a", boxShadow: "3px 3px 0px #1a1a1a" }}
     >
       <h3
@@ -268,6 +271,20 @@ function SkillCard({
     </motion.div>
   );
 }
+
+const Container = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 ${className}`}
+  >
+    {children}
+  </div>
+);
 
 export default function Home() {
   useEffect(() => {
@@ -290,16 +307,17 @@ export default function Home() {
         <Marquee />
       </div>
 
-      {/* Projects */}
-      <section className="py-14 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
+      {/* ── My Projects — 3 cột, card to hơn ── */}
+      <section className="py-16 bg-white">
+        <Container>
           <SectionTitle
-            badge="My Projects"
+            badge="Project ✦ Pixel"
             badgeVariant="orange"
             title="My Projects"
             description="Dive into the design process behind products I've helped bring to life."
           />
-          <div className="grid sm:grid-cols-2 gap-6">
+          {/* ✅ 3 cột desktop, 2 tablet, 1 mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((p, i) => (
               <ProjectCard key={p.id} project={p} index={i} />
             ))}
@@ -308,7 +326,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-8 text-center"
+            className="mt-10 text-center"
           >
             <motion.div
               whileHover={{ scale: 1.04, y: -2 }}
@@ -317,7 +335,7 @@ export default function Home() {
             >
               <Link
                 href="/work"
-                className="inline-flex items-center gap-2 px-6 py-2.5 font-black rounded-full text-[#1a1a1a] bg-white text-sm"
+                className="inline-flex items-center gap-2 px-7 py-3 font-black rounded-full text-[#1a1a1a] bg-white text-sm"
                 style={{
                   border: "2px solid #1a1a1a",
                   boxShadow: "3px 3px 0px #1a1a1a",
@@ -328,18 +346,18 @@ export default function Home() {
               </Link>
             </motion.div>
           </motion.div>
-        </div>
+        </Container>
       </section>
 
-      {/* About */}
-      <section className="py-14 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
+      {/* ── About ── */}
+      <section className="py-16 bg-white">
+        <Container>
           <SectionTitle
             badge="About ✦ Me"
             badgeVariant="blue"
             title="Designer who learns fast, builds faster."
           />
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-10">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -367,7 +385,7 @@ export default function Home() {
                 </Link>
               </motion.div>
             </motion.div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               {[
                 {
                   title: "UX/UI Design",
@@ -395,12 +413,10 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* ══════════════════════════════════════════
-          CONTACT — heading nhỏ hơn, info dưới TO hơn (như hình mẫu)
-      ══════════════════════════════════════════ */}
+      {/* ── Contact ── */}
       <section
         id="contact"
         className="py-24 px-6 bg-white relative overflow-hidden"
@@ -412,9 +428,7 @@ export default function Home() {
             backgroundSize: "52px 52px",
           }}
         />
-
         <div className="relative z-10 max-w-lg mx-auto">
-          {/* ── heading — font nhỏ hơn trước ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -422,7 +436,6 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="mb-10"
           >
-            {/* line 1: "Don't be a" + spinning star */}
             <div className="flex items-start justify-center gap-2 mb-0.5">
               <h2
                 className="font-black text-[#1a1a1a] leading-[1.05]"
@@ -441,8 +454,6 @@ export default function Home() {
                 ✦
               </motion.span>
             </div>
-
-            {/* line 2: ✌️ badge + "Stranger" */}
             <div className="flex items-center justify-center gap-2.5 mb-0.5">
               <span
                 className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
@@ -458,8 +469,6 @@ export default function Home() {
                 Stranger
               </span>
             </div>
-
-            {/* line 3: "let's Chat" */}
             <h2
               className="font-black text-[#1a1a1a] leading-[1.05] text-center"
               style={{
@@ -471,7 +480,6 @@ export default function Home() {
             </h2>
           </motion.div>
 
-          {/* ── avatar LEFT (big, tilted) + contact RIGHT (bigger than before) ── */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -479,7 +487,6 @@ export default function Home() {
             transition={{ delay: 0.15 }}
             className="flex items-stretch gap-4"
           >
-            {/* avatar — tall, tilted left, 3D shadow blue */}
             <motion.div
               initial={{ rotate: -5 }}
               whileHover={{ rotate: 0, scale: 1.04 }}
@@ -509,10 +516,7 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-
-            {/* contact links — to hơn */}
             <div className="flex flex-col gap-3 flex-1">
-              {/* email button — cao hơn, font lớn hơn */}
               <motion.a
                 href="mailto:lvithong31@gmail.com"
                 whileHover={{ scale: 1.02, x: 3 }}
@@ -528,8 +532,6 @@ export default function Home() {
                 <Mail className="w-5 h-5 flex-shrink-0" />
                 <span>lvithong31@gmail.com</span>
               </motion.a>
-
-              {/* social icons — cao hơn */}
               <div className="grid grid-cols-3 gap-3">
                 {[
                   {
@@ -538,7 +540,7 @@ export default function Home() {
                     icon: <Linkedin className="w-6 h-6" />,
                   },
                   {
-                    href: "https://www.behance.net/vhoang310",
+                    href: "https://behance.net",
                     label: "Behance",
                     icon: (
                       <span className="font-black text-lg leading-none">

@@ -57,7 +57,6 @@ const cardVariants: Variants = {
   }),
 };
 
-// ✅ 3D Tilt card
 function ProjectCard({
   project,
   index,
@@ -75,7 +74,7 @@ function ProjectCard({
     const rect = card.getBoundingClientRect();
     const cx = (e.clientX - rect.left) / rect.width - 0.5;
     const cy = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: cy * -14, y: cx * 14 });
+    setTilt({ x: cy * -10, y: cx * 10 });
   };
 
   const handleMouseLeave = () => {
@@ -124,7 +123,6 @@ function ProjectCard({
             }}
           />
 
-          {/* slide-up overlay */}
           <motion.div
             animate={{ y: hovered ? 0 : "100%", opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -147,7 +145,7 @@ function ProjectCard({
 
           <motion.div
             animate={{ opacity: hovered ? 0 : 0.35 }}
-            className="absolute top-4 left-12 text-white text-base select-none"
+            className="absolute top-4 left-4 text-white text-base select-none"
           >
             ✦
           </motion.div>
@@ -176,7 +174,7 @@ function ProjectCard({
         <motion.h3
           animate={{ color: hovered ? "#3B5BDB" : "#1a1a1a" }}
           transition={{ duration: 0.2 }}
-          className="text-xl font-black mb-1"
+          className="text-lg font-black mb-1"
           style={{ fontFamily: "'Georgia', serif" }}
         >
           {project.title}
@@ -222,7 +220,8 @@ export default function Work() {
         }}
       />
 
-      <section className="relative z-10 px-6 pt-24 pb-8 max-w-5xl mx-auto">
+      {/* ✅ max-w-7xl đồng bộ với home */}
+      <section className="relative z-10 px-6 sm:px-10 lg:px-16 pt-24 pb-8 max-w-7xl mx-auto">
         <SectionTitle
           badge="Case ✦ Studies"
           badgeVariant="orange"
@@ -266,8 +265,12 @@ export default function Work() {
         </motion.div>
       </section>
 
-      <section className="relative z-10 px-6 pb-16 max-w-5xl mx-auto">
-        <motion.div layout className="grid sm:grid-cols-2 gap-8">
+      {/* ✅ 3 cột, max-w-7xl */}
+      <section className="relative z-10 px-6 sm:px-10 lg:px-16 pb-16 max-w-7xl mx-auto">
+        <motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           <AnimatePresence mode="popLayout">
             {filtered.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
@@ -287,7 +290,7 @@ export default function Work() {
         )}
       </section>
 
-      {/* ✅ Contact — same style as homepage: avatar LEFT + buttons RIGHT */}
+      {/* Contact */}
       <section
         id="contact"
         className="py-24 px-6 bg-white relative overflow-hidden"
@@ -299,9 +302,7 @@ export default function Work() {
             backgroundSize: "52px 52px",
           }}
         />
-
         <div className="relative z-10 max-w-lg mx-auto">
-          {/* ── heading — font nhỏ hơn trước ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -309,7 +310,6 @@ export default function Work() {
             transition={{ duration: 0.5 }}
             className="mb-10"
           >
-            {/* line 1: "Don't be a" + spinning star */}
             <div className="flex items-start justify-center gap-2 mb-0.5">
               <h2
                 className="font-black text-[#1a1a1a] leading-[1.05]"
@@ -328,8 +328,6 @@ export default function Work() {
                 ✦
               </motion.span>
             </div>
-
-            {/* line 2: ✌️ badge + "Stranger" */}
             <div className="flex items-center justify-center gap-2.5 mb-0.5">
               <span
                 className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
@@ -345,8 +343,6 @@ export default function Work() {
                 Stranger
               </span>
             </div>
-
-            {/* line 3: "let's Chat" */}
             <h2
               className="font-black text-[#1a1a1a] leading-[1.05] text-center"
               style={{
@@ -358,7 +354,6 @@ export default function Work() {
             </h2>
           </motion.div>
 
-          {/* ── avatar LEFT (big, tilted) + contact RIGHT (bigger than before) ── */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -366,7 +361,6 @@ export default function Work() {
             transition={{ delay: 0.15 }}
             className="flex items-stretch gap-4"
           >
-            {/* avatar — tall, tilted left, 3D shadow blue */}
             <motion.div
               initial={{ rotate: -5 }}
               whileHover={{ rotate: 0, scale: 1.04 }}
@@ -396,10 +390,7 @@ export default function Work() {
                 </div>
               </div>
             </motion.div>
-
-            {/* contact links — to hơn */}
             <div className="flex flex-col gap-3 flex-1">
-              {/* email button — cao hơn, font lớn hơn */}
               <motion.a
                 href="mailto:lvithong31@gmail.com"
                 whileHover={{ scale: 1.02, x: 3 }}
@@ -415,8 +406,6 @@ export default function Work() {
                 <Mail className="w-5 h-5 flex-shrink-0" />
                 <span>lvithong31@gmail.com</span>
               </motion.a>
-
-              {/* social icons — cao hơn */}
               <div className="grid grid-cols-3 gap-3">
                 {[
                   {

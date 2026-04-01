@@ -27,54 +27,6 @@ const TOOL_SKILLS = [
   { label: "Gen AI", icon: "🤖" },
 ];
 
-function SkillRow({
-  items,
-  reverse = false,
-  speed = 0.04,
-}: {
-  items: { label: string; icon: string }[];
-  reverse?: boolean;
-  speed?: number;
-}) {
-  const x = useRef(reverse ? -600 : 0);
-  const [offset, setOffset] = useState(x.current);
-  const dir = reverse ? speed : -speed;
-  useAnimationFrame((_, delta) => {
-    x.current += delta * dir;
-    const wrap = 1000;
-    if (x.current < -wrap) x.current = 0;
-    if (x.current > 0) x.current = -wrap;
-    setOffset(x.current);
-  });
-  const all = [...items, ...items, ...items, ...items];
-  return (
-    <div className="overflow-hidden py-1.5">
-      <div
-        className="flex gap-3 whitespace-nowrap w-max"
-        style={{ transform: `translateX(${offset}px)` }}
-      >
-        {all.map((skill, i) => (
-          <span
-            key={i}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-black flex-shrink-0"
-            style={{
-              background: i % 2 === 0 ? "#1a1a1a" : "#3B5BDB",
-              color: "#fff",
-              border: "2px solid #1a1a1a",
-              boxShadow:
-                i % 2 === 0 ? "2px 2px 0px #3B5BDB" : "2px 2px 0px #1a1a1a",
-              fontFamily: "'Georgia', serif",
-            }}
-          >
-            <span>{skill.icon}</span>
-            {skill.label}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function SkillPill({
   label,
   icon,
@@ -147,6 +99,21 @@ const experiences = [
   },
 ];
 
+// ✅ Đồng bộ Container với home + work
+const Container = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 ${className}`}
+  >
+    {children}
+  </div>
+);
+
 export default function About() {
   return (
     <div className="min-h-screen bg-white">
@@ -158,48 +125,50 @@ export default function About() {
         }}
       />
 
-      {/* Hero — NO border, NO divider */}
-      <section className="relative z-10 px-6 pt-28 pb-12 max-w-4xl mx-auto">
-        <SectionTitle badge="About ✦ Me" badgeVariant="blue" />
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="font-black text-[#1a1a1a] mb-6"
-          style={{
-            fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
-            fontFamily: "'Georgia', serif",
-            lineHeight: 1.05,
-          }}
-        >
-          Hi, I&apos;m Viet Hoang
-        </motion.h1>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="space-y-3 max-w-2xl"
-        >
-          <p className="text-neutral-600 leading-relaxed text-sm">
-            I&apos;m a UX/UI designer passionate about crafting intuitive and
-            meaningful digital experiences. Through self-initiated projects and
-            case studies, I focus on solving real user problems with thoughtful
-            design decisions.
-          </p>
-          <p className="text-neutral-600 leading-relaxed text-sm">
-            I enjoy turning research insights into clean, functional interfaces
-            — balancing usability with strong visual design.
-          </p>
-          <p className="text-neutral-600 leading-relaxed text-sm">
-            Currently seeking internship or junior UX/UI opportunities to grow,
-            contribute, and build impactful products.
-          </p>
-        </motion.div>
+      {/* Hero */}
+      <section className="relative z-10 pt-28 pb-12">
+        <Container>
+          <SectionTitle badge="About ✦ Me" badgeVariant="blue" />
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="font-black text-[#1a1a1a] mb-6"
+            style={{
+              fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
+              fontFamily: "'Georgia', serif",
+              lineHeight: 1.05,
+            }}
+          >
+            Hi, I&apos;m Viet Hoang
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="space-y-3 max-w-2xl"
+          >
+            <p className="text-neutral-600 leading-relaxed text-sm">
+              I&apos;m a UX/UI designer passionate about crafting intuitive and
+              meaningful digital experiences. Through self-initiated projects
+              and case studies, I focus on solving real user problems with
+              thoughtful design decisions.
+            </p>
+            <p className="text-neutral-600 leading-relaxed text-sm">
+              I enjoy turning research insights into clean, functional
+              interfaces — balancing usability with strong visual design.
+            </p>
+            <p className="text-neutral-600 leading-relaxed text-sm">
+              Currently seeking internship or junior UX/UI opportunities to
+              grow, contribute, and build impactful products.
+            </p>
+          </motion.div>
+        </Container>
       </section>
 
-      {/* ✅ Skills — NO h-px divider, NO border-t */}
-      <section className="relative z-10 px-6 py-12 bg-white">
-        <div className="max-w-4xl mx-auto">
+      {/* Skills */}
+      <section className="relative z-10 py-12 bg-white">
+        <Container>
           <SectionTitle
             badge="Skills ✦"
             badgeVariant="blue"
@@ -217,7 +186,6 @@ export default function About() {
               />
             ))}
           </div>
-
           <SectionTitle
             badge="Tools ✦"
             badgeVariant="orange"
@@ -235,92 +203,69 @@ export default function About() {
               />
             ))}
           </div>
-
-          {/* running marquee */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-2.5"
-          >
-            <p
-              className="text-xs font-black uppercase tracking-widest text-neutral-400 mb-3"
-              style={{ fontFamily: "'Georgia', serif" }}
-            >
-              All Skills ✦ Running
-            </p>
-            <SkillRow
-              items={[...DESIGN_SKILLS.slice(0, 5), ...TOOL_SKILLS.slice(0, 3)]}
-              reverse={false}
-              speed={0.038}
-            />
-            <SkillRow
-              items={[...DESIGN_SKILLS.slice(5), ...TOOL_SKILLS.slice(3)]}
-              reverse={true}
-              speed={0.032}
-            />
-          </motion.div> */}
-        </div>
+        </Container>
       </section>
 
-      {/* ✅ Experience — NO h-px divider, NO border-t */}
-      <section className="relative z-10 px-6 py-12 max-w-4xl mx-auto">
-        <SectionTitle
-          badge="Journey ✦"
-          badgeVariant="blue"
-          title="Experience"
-          description="My journey in the world of design"
-        />
-        <div className="space-y-8">
-          {experiences.map((exp, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: i * 0.1 }}
-              className="flex gap-5"
-            >
-              <div className="flex flex-col items-center pt-1 flex-shrink-0">
-                <motion.div
-                  whileHover={{ scale: 1.3 }}
-                  className="w-3.5 h-3.5 rounded-full bg-[#3B5BDB]"
-                  style={{
-                    border: "2px solid #1a1a1a",
-                    boxShadow: "2px 2px 0px #1a1a1a",
-                  }}
-                />
-                {i < experiences.length - 1 && (
-                  <div className="w-0.5 flex-1 bg-[#d0d0d0] mt-1.5" />
-                )}
-              </div>
+      {/* Experience */}
+      <section className="relative z-10 py-12">
+        <Container>
+          <SectionTitle
+            badge="Journey ✦"
+            badgeVariant="blue"
+            title="Experience"
+            description="My journey in the world of design"
+          />
+          <div className="space-y-8">
+            {experiences.map((exp, i) => (
               <motion.div
-                whileHover={{ x: 4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="pb-6"
+                key={i}
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: i * 0.1 }}
+                className="flex gap-5"
               >
-                <span className="text-xs font-black text-[#3B5BDB] uppercase tracking-widest">
-                  {exp.year}
-                </span>
-                <h3
-                  className="text-base font-black text-[#1a1a1a] mt-0.5 mb-0.5"
-                  style={{ fontFamily: "'Georgia', serif" }}
+                <div className="flex flex-col items-center pt-1 flex-shrink-0">
+                  <motion.div
+                    whileHover={{ scale: 1.3 }}
+                    className="w-3.5 h-3.5 rounded-full bg-[#3B5BDB]"
+                    style={{
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "2px 2px 0px #1a1a1a",
+                    }}
+                  />
+                  {i < experiences.length - 1 && (
+                    <div className="w-0.5 flex-1 bg-[#d0d0d0] mt-1.5" />
+                  )}
+                </div>
+                <motion.div
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                  className="pb-6"
                 >
-                  {exp.title}
-                </h3>
-                <p className="text-xs text-neutral-400 font-semibold mb-1.5">
-                  {exp.company}
-                </p>
-                <p className="text-sm text-neutral-600 leading-relaxed">
-                  {exp.desc}
-                </p>
+                  <span className="text-xs font-black text-[#3B5BDB] uppercase tracking-widest">
+                    {exp.year}
+                  </span>
+                  <h3
+                    className="text-base font-black text-[#1a1a1a] mt-0.5 mb-0.5"
+                    style={{ fontFamily: "'Georgia', serif" }}
+                  >
+                    {exp.title}
+                  </h3>
+                  <p className="text-xs text-neutral-400 font-semibold mb-1.5">
+                    {exp.company}
+                  </p>
+                  <p className="text-sm text-neutral-600 leading-relaxed">
+                    {exp.desc}
+                  </p>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Container>
       </section>
 
-      {/* ✅ Contact — NO border-t */}
+      {/* Contact */}
       <section
         id="contact"
         className="py-24 px-6 bg-white relative overflow-hidden"
@@ -332,9 +277,7 @@ export default function About() {
             backgroundSize: "52px 52px",
           }}
         />
-
         <div className="relative z-10 max-w-lg mx-auto">
-          {/* ── heading — font nhỏ hơn trước ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -342,7 +285,6 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="mb-10"
           >
-            {/* line 1: "Don't be a" + spinning star */}
             <div className="flex items-start justify-center gap-2 mb-0.5">
               <h2
                 className="font-black text-[#1a1a1a] leading-[1.05]"
@@ -361,8 +303,6 @@ export default function About() {
                 ✦
               </motion.span>
             </div>
-
-            {/* line 2: ✌️ badge + "Stranger" */}
             <div className="flex items-center justify-center gap-2.5 mb-0.5">
               <span
                 className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
@@ -378,8 +318,6 @@ export default function About() {
                 Stranger
               </span>
             </div>
-
-            {/* line 3: "let's Chat" */}
             <h2
               className="font-black text-[#1a1a1a] leading-[1.05] text-center"
               style={{
@@ -391,7 +329,6 @@ export default function About() {
             </h2>
           </motion.div>
 
-          {/* ── avatar LEFT (big, tilted) + contact RIGHT (bigger than before) ── */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -399,7 +336,6 @@ export default function About() {
             transition={{ delay: 0.15 }}
             className="flex items-stretch gap-4"
           >
-            {/* avatar — tall, tilted left, 3D shadow blue */}
             <motion.div
               initial={{ rotate: -5 }}
               whileHover={{ rotate: 0, scale: 1.04 }}
@@ -429,10 +365,7 @@ export default function About() {
                 </div>
               </div>
             </motion.div>
-
-            {/* contact links — to hơn */}
             <div className="flex flex-col gap-3 flex-1">
-              {/* email button — cao hơn, font lớn hơn */}
               <motion.a
                 href="mailto:lvithong31@gmail.com"
                 whileHover={{ scale: 1.02, x: 3 }}
@@ -448,8 +381,6 @@ export default function About() {
                 <Mail className="w-5 h-5 flex-shrink-0" />
                 <span>lvithong31@gmail.com</span>
               </motion.a>
-
-              {/* social icons — cao hơn */}
               <div className="grid grid-cols-3 gap-3">
                 {[
                   {
