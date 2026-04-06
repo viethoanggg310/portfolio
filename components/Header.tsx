@@ -67,23 +67,29 @@ export function Header() {
         <div className="max-w-5xl mx-auto px-6">
           <nav className="flex items-center justify-between h-16 md:h-20">
             {/* ── Logo ──────────────────── */}
+            {/* ── Logo ──────────────────── */}
             <Link href="/" className="relative z-50" onClick={handleLogoClick}>
               <motion.div
-                whileHover={{ scale: 1.12, rotate: -8 }}
-                whileTap={{ scale: 0.93 }}
+                whileHover={{ x: 2 }}
+                whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center relative"
-                style={{
-                  background: "#1a1a1a",
-                  border: "2px solid #1a1a1a",
-                  boxShadow: "3px 3px 0px #3B5BDB",
-                }}
+                className="inline-flex items-center gap-1.5"
               >
                 <span
-                  className="text-white font-black text-base relative z-10"
-                  style={{ fontFamily: "'Georgia', serif" }}
+                  className="font-black text-xl text-[#1a1a1a]"
+                  style={{
+                    fontFamily: "'Georgia', serif",
+                    fontStyle: "italic",
+                    letterSpacing: "-0.04em",
+                  }}
                 >
-                  V
+                  viethoang
+                </span>
+                <span
+                  className="text-sm font-black text-[#3B5BDB]"
+                  style={{ lineHeight: 1 }}
+                >
+                  ✦
                 </span>
               </motion.div>
             </Link>

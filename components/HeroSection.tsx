@@ -5,13 +5,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useRef } from "react";
 
-const staggerContainer: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-
 const wordReveal: Variants = {
-  hidden: { opacity: 0, y: 80, skewY: 4 },
+  hidden: { opacity: 0, y: 60, skewY: 3 },
   show: {
     opacity: 1,
     y: 0,
@@ -19,6 +14,9 @@ const wordReveal: Variants = {
     transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
   },
 };
+
+// ✅ Mỗi LINE là 1 đơn vị animate — wrap đẹp, căn giữa tự nhiên
+const lines = ["From ideas to", "meaningful, user-centered", "experiences."];
 
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
@@ -28,14 +26,6 @@ export default function HeroSection() {
   });
   const headY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const bottomY = useTransform(scrollYProgress, [0, 1], [0, 30]);
-
-  const words = [
-    "Making",
-    "beautiful,",
-    "intuitive",
-    "digital",
-    "experiences.",
-  ];
 
   return (
     <section
@@ -52,8 +42,8 @@ export default function HeroSection() {
       />
 
       <div className="relative z-10 flex flex-col flex-1 w-full">
-        {/* badge top center */}
-        <div className="flex justify-center pt-24 pb-4">
+        {/* badge */}
+        <div className="flex justify-center pt-24 pb-2">
           <motion.div
             initial={{ opacity: 0, y: -14, rotate: -3 }}
             animate={{ opacity: 1, y: 0, rotate: -2 }}
@@ -70,7 +60,7 @@ export default function HeroSection() {
               className="font-black text-[#1a1a1a] text-sm"
               style={{ fontFamily: "'Georgia', serif" }}
             >
-              A UI/UX Designer
+              UI/UX Designer
             </span>
             <span className="absolute -top-2 -right-2 text-[#3B5BDB] text-xs">
               ✦
@@ -78,94 +68,74 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* headline */}
+        {/* ✅ Headline: mỗi line là 1 block, căn giữa, wrap tự nhiên */}
         <motion.div
           style={{ y: headY }}
-          className="flex-1 flex items-center justify-center px-4"
+          className="flex-1 flex items-center justify-center px-6"
         >
-          <motion.h1
-            variants={staggerContainer}
-            initial="hidden"
-            animate="show"
-            className="font-black text-[#1a1a1a] leading-[0.88] tracking-tighter text-center"
+          <h1
+            className="font-black text-[#1a1a1a] tracking-tighter text-center w-full"
             style={{
-              fontSize: "clamp(3rem, 10vw, 8.5rem)",
               fontFamily: "'Georgia', 'Times New Roman', serif",
+              lineHeight: 1.0,
             }}
           >
-            {words.map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden mr-[0.1em]">
-                <motion.span className="inline-block" variants={wordReveal}>
-                  {word}
-                </motion.span>
-              </span>
+            {lines.map((line, i) => (
+              // ✅ block + overflow-hidden = mỗi dòng animate riêng, căn giữa bình thường
+              <div key={i} className="overflow-hidden">
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  variants={wordReveal}
+                  transition={{ delay: 0.1 + i * 0.1 }}
+                  style={{
+                    // ✅ font tự co theo viewport, không bao giờ tràn
+                    fontSize: "clamp(2.6rem, 9vw, 7rem)",
+                    display: "block",
+                  }}
+                >
+                  {line}
+                </motion.div>
+              </div>
             ))}
-          </motion.h1>
+          </h1>
         </motion.div>
 
-        {/* ── BOTTOM ROW: text LEFT · arrow · avatar RIGHT (ref style) ── */}
+        {/* ✅ BOTTOM ROW: avatar LEFT · arrow · text+buttons RIGHT */}
         <motion.div style={{ y: bottomY }} className="w-full pb-10 px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="max-w-5xl mx-auto flex items-end justify-end gap-5"
+            className="max-w-5xl mx-auto flex items-end justify-end gap-6"
           >
-            {/* ── intro text + buttons ── */}
-            <div className="text-left max-w-[250px] mb-3">
-              <p className="text-neutral-500 text-sm leading-relaxed mb-5">
-                Hi, I&apos;m{" "}
-                <span
-                  className="font-black"
-                  style={{
-                    color: "#3B5BDB",
-                    textShadow: "1px 1px 0px rgba(59,91,219,0.18)",
-                  }}
-                >
-                  Viet Hoang
-                </span>{" "}
-                and I design intuitive, user-centered experiences that simplify
-                complexity.
-              </p>
-
-              <div className="flex items-center gap-2 flex-wrap">
-                {/* View Work — blue filled */}
-                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    href="/work"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black rounded-full"
-                    style={{
-                      background: "#3B5BDB",
-                      color: "#fff",
-                      border: "2px solid #1a1a1a",
-                      boxShadow: "3px 3px 0px #1a1a1a",
-                      fontFamily: "'Georgia', serif",
-                    }}
+            {/* avatar LEFT, tilted */}
+            <motion.div
+              initial={{ rotate: -6 }}
+              whileHover={{ rotate: 0, scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              className="flex-shrink-0"
+            >
+              <div
+                className="w-[130px] h-[160px] rounded-3xl overflow-hidden"
+                style={{
+                  border: "3px solid #fff",
+                  boxShadow: "5px 5px 0px #3B5BDB",
+                }}
+              >
+                {/* 👉 Replace: <Image src="/avatar.jpg" alt="Viet Hoang" fill className="object-cover" /> */}
+                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
+                  <span
+                    className="text-white font-black text-5xl"
+                    style={{ fontFamily: "'Georgia', serif" }}
                   >
-                    View Work <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                </motion.div>
-
-                {/* Let's Talk — orange outlined */}
-                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    href="/#contact"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-black rounded-full"
-                    style={{
-                      background: "#F5A623",
-                      color: "#1a1a1a",
-                      border: "2px solid #1a1a1a",
-                      boxShadow: "3px 3px 0px #1a1a1a",
-                      fontFamily: "'Georgia', serif",
-                    }}
-                  >
-                    Let&apos;s Talk ✦
-                  </Link>
-                </motion.div>
+                    V
+                  </span>
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* curved arrow pointing to avatar */}
+            {/* arrow */}
             <svg
               className="flex-shrink-0 mb-10"
               width="52"
@@ -190,31 +160,66 @@ export default function HeroSection() {
               />
             </svg>
 
-            {/* ── avatar card, tilted right ── */}
-            <motion.div
-              initial={{ rotate: 6 }}
-              whileHover={{ rotate: 0, scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="flex-shrink-0"
-            >
-              <div
-                className="w-[118px] h-[148px] rounded-3xl overflow-hidden"
-                style={{
-                  border: "3px solid #fff",
-                  boxShadow: "5px 5px 0px #3B5BDB",
-                }}
-              >
-                {/* 👉 Replace: <Image src="/avatar.jpg" alt="Viet Hoang" fill className="object-cover" /> */}
-                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
-                  <span
-                    className="text-white font-black text-5xl"
-                    style={{ fontFamily: "'Georgia', serif" }}
+            {/* ✅ text RIGHT — to hơn, buttons cùng 1 hàng */}
+            <div className="text-left max-w-[300px] mb-2">
+              <p className="text-neutral-500 text-[16px] leading-relaxed mb-5">
+                Hi, I&apos;m{" "}
+                <span
+                  className="font-black"
+                  style={{
+                    color: "#3B5BDB",
+                    textShadow: "1px 1px 0px rgba(59,91,219,0.18)",
+                  }}
+                >
+                  Viet Hoang
+                </span>{" "}
+                , a UX/UI Designer turning ideas into simple, user-friendly
+                experiences.
+              </p>
+
+              {/* ✅ 2 buttons cùng 1 hàng, không wrap */}
+              <div className="flex items-center gap-2.5 flex-nowrap">
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-shrink-0"
+                >
+                  <Link
+                    href="/work"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-black rounded-full whitespace-nowrap"
+                    style={{
+                      background: "#3B5BDB",
+                      color: "#fff",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "3px 3px 0px #1a1a1a",
+                      fontFamily: "'Georgia', serif",
+                    }}
                   >
-                    V
-                  </span>
-                </div>
+                    View Work <ArrowUpRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-shrink-0"
+                >
+                  <Link
+                    href="/#contact"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-black rounded-full whitespace-nowrap"
+                    style={{
+                      background: "#F5A623",
+                      color: "#1a1a1a",
+                      border: "2px solid #1a1a1a",
+                      boxShadow: "3px 3px 0px #1a1a1a",
+                      fontFamily: "'Georgia', serif",
+                    }}
+                  >
+                    Contact Me ✦
+                  </Link>
+                </motion.div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

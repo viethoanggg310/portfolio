@@ -3,7 +3,7 @@
 import HeroSection from "@/components/HeroSection";
 import { SectionTitle } from "@/components/SectionTitle";
 import { motion, useAnimationFrame } from "framer-motion";
-import { ArrowUpRight, Mail, Linkedin, Github } from "lucide-react";
+import { ArrowUpRight, Mail, Facebook, Instagram } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 
@@ -47,13 +47,20 @@ const projects = [
 ];
 
 const PILLS = [
-  { text: "Project ✦ Pixel", color: "orange" },
-  { text: "Project ✦ Pixel", color: "blue" },
-  { text: "Project ✦ Pixel", color: "orange" },
-  { text: "Project ✦ Pixel", color: "blue" },
-  { text: "Project ✦ Pixel", color: "orange" },
-  { text: "Project ✦ Pixel", color: "blue" },
+  { text: "UX/UI ✦ DESIGNER", color: "orange" },
+  { text: "VIET ✦ HOANG", color: "blue" },
+  { text: "UX/UI ✦ DESIGNER", color: "orange" },
+  { text: "VIET ✦ HOANG", color: "blue" },
+  { text: "UX/UI ✦ DESIGNER", color: "orange" },
+  { text: "UX/UI ✦ DESIGNER", color: "blue" },
 ];
+
+// ✅ Chỉ cần sửa array này để thay đổi text contact — style tự giữ nguyên
+// const contactLines = [
+//   { text: "Don’t be shy", highlight: false },
+//   { text: "Hello", highlight: true },
+//   { text: "Let's talk", highlight: false },
+// ];
 
 function Marquee() {
   const x = useRef(0);
@@ -135,7 +142,6 @@ function ProjectCard({
       style={{ perspective: "900px", transformStyle: "preserve-3d" }}
     >
       <Link href={`/work/${project.slug}`} className="block">
-        {/* ✅ ảnh to hơn: aspect-[4/3] thay vì 16/10 */}
         <motion.div
           animate={{
             rotateX: tilt.x,
@@ -161,7 +167,6 @@ function ProjectCard({
               e.currentTarget.style.display = "none";
             }}
           />
-
           <motion.div
             animate={{ y: hovered ? 0 : "100%", opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -181,7 +186,6 @@ function ProjectCard({
               <ArrowUpRight className="w-5 h-5 text-[#1a1a1a]" />
             </div>
           </motion.div>
-
           <motion.div
             animate={{ opacity: hovered ? 0 : 0.4 }}
             className="absolute top-4 left-4 text-white text-base select-none"
@@ -307,16 +311,15 @@ export default function Home() {
         <Marquee />
       </div>
 
-      {/* ── My Projects — 3 cột, card to hơn ── */}
+      {/* Projects */}
       <section className="py-16 bg-white">
         <Container>
           <SectionTitle
-            badge="Project ✦ Pixel"
+            badge="Selected ✦ Works"
             badgeVariant="orange"
             title="My Projects"
-            description="Dive into the design process behind products I've helped bring to life."
+            description="A selection of personal projects showcasing my UX/UI design process and problem-solving approach."
           />
-          {/* ✅ 3 cột desktop, 2 tablet, 1 mobile */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((p, i) => (
               <ProjectCard key={p.id} project={p} index={i} />
@@ -349,13 +352,13 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── About ── */}
+      {/* About */}
       <section className="py-16 bg-white">
         <Container>
           <SectionTitle
             badge="About ✦ Me"
             badgeVariant="blue"
-            title="Designer who learns fast, builds faster."
+            title="Designing simple, meaningful digital experiences"
           />
           <div className="grid lg:grid-cols-2 gap-10">
             <motion.div
@@ -364,12 +367,13 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-neutral-600 leading-relaxed mb-6 text-sm">
-                I&apos;m a junior product designer passionate about crafting
-                intuitive and meaningful digital experiences. I&apos;ve worked
-                on self-initiated projects across e-commerce, education, and
-                productivity tools — focusing on usability, research, and clean
-                UI.
+              <p className="text-neutral-600 leading-relaxed mb-6 text-m max-w-2xl text-justify [hyphens:auto]">
+                I&apos;m a UX/UI Designer with 6 months of experience, driven by
+                a passion for solving user problems and creating simple,
+                meaningful digital experiences. Through self-initiated projects
+                in food delivery and entertainment, I focus on understanding
+                user needs, refining interactions, and delivering clean,
+                intuitive interfaces.
               </p>
               <motion.div
                 whileHover={{ scale: 1.04, y: -2 }}
@@ -392,16 +396,16 @@ export default function Home() {
                   skills: "Research · Wireframe · Prototype",
                 },
                 {
-                  title: "Front-End Basics",
-                  skills: "HTML · CSS · Responsive",
+                  title: "Interaction Design",
+                  skills: "User Flows · Usability · Micro-interactions",
                 },
                 {
-                  title: "Visual & Editing",
-                  skills: "Photoshop · Video Editing",
+                  title: "Visual Design",
+                  skills: "Layout · Typography · Color Systems",
                 },
                 {
-                  title: "Self-Initiated",
-                  skills: "Case Studies & Concept Apps",
+                  title: "Product Thinking",
+                  skills: "Problem Solving · Iteration · User-Centered",
                 },
               ].map((c, i) => (
                 <SkillCard
@@ -428,23 +432,25 @@ export default function Home() {
             backgroundSize: "52px 52px",
           }}
         />
-        <div className="relative z-10 max-w-lg mx-auto">
+
+        <div className="relative z-10">
+          {/* heading — không giới hạn width, whitespace-nowrap */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-10"
+            className="mb-10 text-center"
           >
             <div className="flex items-start justify-center gap-2 mb-0.5">
               <h2
-                className="font-black text-[#1a1a1a] leading-[1.05]"
+                className="font-black text-[#1a1a1a] leading-[1.05] whitespace-nowrap"
                 style={{
                   fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
                   fontFamily: "'Georgia', serif",
                 }}
               >
-                Don&apos;t be a
+                Don’t be shy
               </h2>
               <motion.span
                 className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0"
@@ -466,117 +472,120 @@ export default function Home() {
                   fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
                 }}
               >
-                Stranger
+                Hello
               </span>
             </div>
             <h2
-              className="font-black text-[#1a1a1a] leading-[1.05] text-center"
+              className="font-black text-[#1a1a1a] leading-[1.05] text-center whitespace-nowrap"
               style={{
                 fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
                 fontFamily: "'Georgia', serif",
               }}
             >
-              let&apos;s Chat
+              let&apos;s Talk
             </h2>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="flex items-stretch gap-4"
-          >
+          {/* social — giữ max-w-lg */}
+          <div className="max-w-lg mx-auto">
             <motion.div
-              initial={{ rotate: -5 }}
-              whileHover={{ rotate: 0, scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 280, damping: 20 }}
-              className="flex-shrink-0"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 }}
+              className="flex items-stretch gap-4"
             >
-              <div
-                className="w-[100px] rounded-2xl overflow-hidden"
-                style={{
-                  height: "100%",
-                  minHeight: "136px",
-                  border: "3px solid #1a1a1a",
-                  boxShadow:
-                    "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
-                }}
+              <motion.div
+                initial={{ rotate: -5 }}
+                whileHover={{ rotate: 0, scale: 1.04 }}
+                transition={{ type: "spring", stiffness: 280, damping: 20 }}
+                className="flex-shrink-0"
               >
                 <div
-                  className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
-                  style={{ minHeight: "136px" }}
+                  className="w-[100px] rounded-2xl overflow-hidden"
+                  style={{
+                    height: "100%",
+                    minHeight: "136px",
+                    border: "3px solid #1a1a1a",
+                    boxShadow:
+                      "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
+                  }}
                 >
-                  <span
-                    className="text-white font-black text-3xl"
-                    style={{ fontFamily: "'Georgia', serif" }}
+                  <div
+                    className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
+                    style={{ minHeight: "136px" }}
                   >
-                    V
-                  </span>
+                    <span
+                      className="text-white font-black text-3xl"
+                      style={{ fontFamily: "'Georgia', serif" }}
+                    >
+                      V
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+              <div className="flex flex-col gap-3 flex-1">
+                <motion.a
+                  href="mailto:lvithong31@gmail.com"
+                  whileHover={{ scale: 1.02, x: 3 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
+                  style={{
+                    background: "#3B5BDB",
+                    border: "2px solid #1a1a1a",
+                    boxShadow: "3px 3px 0px #1a1a1a",
+                    fontSize: "15px",
+                  }}
+                >
+                  <Mail className="w-5 h-5 flex-shrink-0" />
+                  <span>lvithong31@gmail.com</span>
+                </motion.a>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    {
+                      href: "https://www.facebook.com/Brazes.3110/",
+                      label: "Facebook",
+                      icon: <Facebook className="w-6 h-6" />,
+                    },
+                    {
+                      href: "https://www.behance.net/vhoang310",
+                      label: "Behance",
+                      icon: (
+                        <span className="font-black text-lg leading-none">
+                          Bē
+                        </span>
+                      ),
+                    },
+                    {
+                      href: "https://www.instagram.com/vhoang.310/",
+                      label: "Instagram",
+                      icon: <Instagram className="w-6 h-6" />,
+                    },
+                  ].map((s) => (
+                    <motion.a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      whileHover={{ scale: 1.06, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center justify-center rounded-2xl text-white"
+                      style={{
+                        background: "#3B5BDB",
+                        border: "2px solid #1a1a1a",
+                        boxShadow: "2px 2px 0px #1a1a1a",
+                        paddingTop: "18px",
+                        paddingBottom: "18px",
+                      }}
+                    >
+                      {s.icon}
+                    </motion.a>
+                  ))}
                 </div>
               </div>
             </motion.div>
-            <div className="flex flex-col gap-3 flex-1">
-              <motion.a
-                href="mailto:lvithong31@gmail.com"
-                whileHover={{ scale: 1.02, x: 3 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
-                style={{
-                  background: "#3B5BDB",
-                  border: "2px solid #1a1a1a",
-                  boxShadow: "3px 3px 0px #1a1a1a",
-                  fontSize: "15px",
-                }}
-              >
-                <Mail className="w-5 h-5 flex-shrink-0" />
-                <span>lvithong31@gmail.com</span>
-              </motion.a>
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  {
-                    href: "https://linkedin.com",
-                    label: "LinkedIn",
-                    icon: <Linkedin className="w-6 h-6" />,
-                  },
-                  {
-                    href: "https://behance.net",
-                    label: "Behance",
-                    icon: (
-                      <span className="font-black text-lg leading-none">
-                        Bē
-                      </span>
-                    ),
-                  },
-                  {
-                    href: "https://github.com",
-                    label: "GitHub",
-                    icon: <Github className="w-6 h-6" />,
-                  },
-                ].map((s) => (
-                  <motion.a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    whileHover={{ scale: 1.06, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center justify-center rounded-2xl text-white"
-                    style={{
-                      background: "#3B5BDB",
-                      border: "2px solid #1a1a1a",
-                      boxShadow: "2px 2px 0px #1a1a1a",
-                      paddingTop: "18px",
-                      paddingBottom: "18px",
-                    }}
-                  >
-                    {s.icon}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

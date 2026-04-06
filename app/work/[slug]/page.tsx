@@ -377,7 +377,7 @@ export default async function ProjectDetail({
                   fontFamily: "'Georgia', serif",
                 }}
               >
-                Don&apos;t be a
+                Don&apos;t be shy
               </h2>
               <span className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0">
                 ✦
@@ -407,7 +407,7 @@ export default async function ProjectDetail({
                   fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
                 }}
               >
-                Stranger
+                Hello
               </span>
             </div>
 
@@ -419,7 +419,7 @@ export default async function ProjectDetail({
                 fontFamily: "'Georgia', serif",
               }}
             >
-              let&apos;s Chat
+              let&apos;s Talk
             </h2>
           </div>
 
@@ -518,7 +518,7 @@ export default async function ProjectDetail({
           </div>
 
           {/* More Projects button */}
-          <div className="text-center">
+          {/* <div className="text-center">
             <Link
               href="/work"
               className="inline-flex items-center gap-2 px-6 py-3 font-black rounded-full text-[#1a1a1a] text-sm bg-white hover:bg-[#ebebeb] transition-colors"
@@ -530,7 +530,7 @@ export default async function ProjectDetail({
             >
               More Projects <ArrowUpRight className="w-4 h-4" />
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

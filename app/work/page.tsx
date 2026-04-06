@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Filter, ArrowUpRight, Mail, Linkedin, Github } from "lucide-react";
+import { Filter, ArrowUpRight, Mail, Facebook, Instagram } from "lucide-react";
 import Link from "next/link";
 import { SectionTitle } from "@/components/SectionTitle";
 
@@ -72,14 +72,10 @@ function ProjectCard({
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
-    const cx = (e.clientX - rect.left) / rect.width - 0.5;
-    const cy = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: cy * -10, y: cx * 10 });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setHovered(false);
+    setTilt({
+      x: ((e.clientY - rect.top) / rect.height - 0.5) * -10,
+      y: ((e.clientX - rect.left) / rect.width - 0.5) * 10,
+    });
   };
 
   return (
@@ -93,7 +89,10 @@ function ProjectCard({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => {
+        setTilt({ x: 0, y: 0 });
+        setHovered(false);
+      }}
       style={{ perspective: "800px" }}
     >
       <Link href={`/work/${project.slug}`} className="group block">
@@ -122,7 +121,6 @@ function ProjectCard({
               e.currentTarget.style.display = "none";
             }}
           />
-
           <motion.div
             animate={{ y: hovered ? 0 : "100%", opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -142,7 +140,6 @@ function ProjectCard({
               <ArrowUpRight className="w-4 h-4 text-[#1a1a1a]" />
             </div>
           </motion.div>
-
           <motion.div
             animate={{ opacity: hovered ? 0 : 0.35 }}
             className="absolute top-4 left-4 text-white text-base select-none"
@@ -167,7 +164,6 @@ function ProjectCard({
             </span>
           </motion.div>
         </motion.div>
-
         <p className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-0.5">
           {project.category}
         </p>
@@ -220,13 +216,12 @@ export default function Work() {
         }}
       />
 
-      {/* ✅ max-w-7xl đồng bộ với home */}
       <section className="relative z-10 px-6 sm:px-10 lg:px-16 pt-24 pb-8 max-w-7xl mx-auto">
         <SectionTitle
           badge="Case ✦ Studies"
           badgeVariant="orange"
           title="Case Studies"
-          description="Thoughtful UX decisions. Clean UI execution."
+          description="From problem to solution — through thoughtful UX and clean UI."
         />
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -265,7 +260,6 @@ export default function Work() {
         </motion.div>
       </section>
 
-      {/* ✅ 3 cột, max-w-7xl */}
       <section className="relative z-10 px-6 sm:px-10 lg:px-16 pb-16 max-w-7xl mx-auto">
         <motion.div
           layout
@@ -290,7 +284,7 @@ export default function Work() {
         )}
       </section>
 
-      {/* Contact */}
+      {/* ── Contact ── */}
       <section
         id="contact"
         className="py-24 px-6 bg-white relative overflow-hidden"
@@ -302,23 +296,25 @@ export default function Work() {
             backgroundSize: "52px 52px",
           }}
         />
-        <div className="relative z-10 max-w-lg mx-auto">
+
+        <div className="relative z-10">
+          {/* heading — không giới hạn width, whitespace-nowrap */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-10"
+            className="mb-10 text-center"
           >
             <div className="flex items-start justify-center gap-2 mb-0.5">
               <h2
-                className="font-black text-[#1a1a1a] leading-[1.05]"
+                className="font-black text-[#1a1a1a] leading-[1.05] whitespace-nowrap"
                 style={{
                   fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
                   fontFamily: "'Georgia', serif",
                 }}
               >
-                Don&apos;t be a
+                Don’t be shy
               </h2>
               <motion.span
                 className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0"
@@ -340,117 +336,120 @@ export default function Work() {
                   fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
                 }}
               >
-                Stranger
+                Hello
               </span>
             </div>
             <h2
-              className="font-black text-[#1a1a1a] leading-[1.05] text-center"
+              className="font-black text-[#1a1a1a] leading-[1.05] text-center whitespace-nowrap"
               style={{
                 fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
                 fontFamily: "'Georgia', serif",
               }}
             >
-              let&apos;s Chat
+              let&apos;s Talk
             </h2>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="flex items-stretch gap-4"
-          >
+          {/* social — giữ max-w-lg */}
+          <div className="max-w-lg mx-auto">
             <motion.div
-              initial={{ rotate: -5 }}
-              whileHover={{ rotate: 0, scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 280, damping: 20 }}
-              className="flex-shrink-0"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 }}
+              className="flex items-stretch gap-4"
             >
-              <div
-                className="w-[100px] rounded-2xl overflow-hidden"
-                style={{
-                  height: "100%",
-                  minHeight: "136px",
-                  border: "3px solid #1a1a1a",
-                  boxShadow:
-                    "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
-                }}
+              <motion.div
+                initial={{ rotate: -5 }}
+                whileHover={{ rotate: 0, scale: 1.04 }}
+                transition={{ type: "spring", stiffness: 280, damping: 20 }}
+                className="flex-shrink-0"
               >
                 <div
-                  className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
-                  style={{ minHeight: "136px" }}
+                  className="w-[100px] rounded-2xl overflow-hidden"
+                  style={{
+                    height: "100%",
+                    minHeight: "136px",
+                    border: "3px solid #1a1a1a",
+                    boxShadow:
+                      "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
+                  }}
                 >
-                  <span
-                    className="text-white font-black text-3xl"
-                    style={{ fontFamily: "'Georgia', serif" }}
+                  <div
+                    className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
+                    style={{ minHeight: "136px" }}
                   >
-                    V
-                  </span>
+                    <span
+                      className="text-white font-black text-3xl"
+                      style={{ fontFamily: "'Georgia', serif" }}
+                    >
+                      V
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+              <div className="flex flex-col gap-3 flex-1">
+                <motion.a
+                  href="mailto:lvithong31@gmail.com"
+                  whileHover={{ scale: 1.02, x: 3 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
+                  style={{
+                    background: "#3B5BDB",
+                    border: "2px solid #1a1a1a",
+                    boxShadow: "3px 3px 0px #1a1a1a",
+                    fontSize: "15px",
+                  }}
+                >
+                  <Mail className="w-5 h-5 flex-shrink-0" />
+                  <span>lvithong31@gmail.com</span>
+                </motion.a>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    {
+                      href: "https://www.facebook.com/Brazes.3110/",
+                      label: "Facebook",
+                      icon: <Facebook className="w-6 h-6" />,
+                    },
+                    {
+                      href: "https://www.behance.net/vhoang310",
+                      label: "Behance",
+                      icon: (
+                        <span className="font-black text-lg leading-none">
+                          Bē
+                        </span>
+                      ),
+                    },
+                    {
+                      href: "https://www.instagram.com/vhoang.310/",
+                      label: "Instagram",
+                      icon: <Instagram className="w-6 h-6" />,
+                    },
+                  ].map((s) => (
+                    <motion.a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      whileHover={{ scale: 1.06, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center justify-center rounded-2xl text-white"
+                      style={{
+                        background: "#3B5BDB",
+                        border: "2px solid #1a1a1a",
+                        boxShadow: "2px 2px 0px #1a1a1a",
+                        paddingTop: "18px",
+                        paddingBottom: "18px",
+                      }}
+                    >
+                      {s.icon}
+                    </motion.a>
+                  ))}
                 </div>
               </div>
             </motion.div>
-            <div className="flex flex-col gap-3 flex-1">
-              <motion.a
-                href="mailto:lvithong31@gmail.com"
-                whileHover={{ scale: 1.02, x: 3 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
-                style={{
-                  background: "#3B5BDB",
-                  border: "2px solid #1a1a1a",
-                  boxShadow: "3px 3px 0px #1a1a1a",
-                  fontSize: "15px",
-                }}
-              >
-                <Mail className="w-5 h-5 flex-shrink-0" />
-                <span>lvithong31@gmail.com</span>
-              </motion.a>
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  {
-                    href: "https://linkedin.com",
-                    label: "LinkedIn",
-                    icon: <Linkedin className="w-6 h-6" />,
-                  },
-                  {
-                    href: "https://behance.net",
-                    label: "Behance",
-                    icon: (
-                      <span className="font-black text-lg leading-none">
-                        Bē
-                      </span>
-                    ),
-                  },
-                  {
-                    href: "https://github.com",
-                    label: "GitHub",
-                    icon: <Github className="w-6 h-6" />,
-                  },
-                ].map((s) => (
-                  <motion.a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    whileHover={{ scale: 1.06, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center justify-center rounded-2xl text-white"
-                    style={{
-                      background: "#3B5BDB",
-                      border: "2px solid #1a1a1a",
-                      boxShadow: "2px 2px 0px #1a1a1a",
-                      paddingTop: "18px",
-                      paddingBottom: "18px",
-                    }}
-                  >
-                    {s.icon}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

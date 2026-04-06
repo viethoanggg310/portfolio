@@ -85,7 +85,7 @@ export function SectionTitle({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, delay: 0.2 }}
-          className={`text-neutral-500 text-base ${center ? "max-w-xl" : "max-w-lg"}`}
+          className={`text-neutral-500 text-base `}
         >
           {description}
         </motion.p>
