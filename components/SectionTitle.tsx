@@ -46,14 +46,14 @@ export function SectionTitle({
           animate={{
             boxShadow: badgeHovered
               ? isOrange
-                ? "5px 5px 0px 0px #3B5BDB"
-                : "5px 5px 0px 0px #F5A623"
+                ? "5px 5px 0px 0px #5C7CFA"
+                : "5px 5px 0px 0px #FF8E53"
               : "3px 3px 0px 0px #1a1a1a",
           }}
           transition={{ duration: 0.2 }}
           className="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl text-sm font-black tracking-wide select-none"
           style={{
-            background: isOrange ? "#F5A623" : "#3B5BDB",
+            background: isOrange ? "#FF8E53" : "#5C7CFA",
             color: isOrange ? "#1a1a1a" : "#ffffff",
             border: "2px solid #1a1a1a",
             fontFamily: "'Georgia', serif",

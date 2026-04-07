@@ -2,8 +2,9 @@
 
 import HeroSection from "@/components/HeroSection";
 import { SectionTitle } from "@/components/SectionTitle";
+import ContactSection from "@/components/ContactSection";
 import { motion, useAnimationFrame } from "framer-motion";
-import { ArrowUpRight, Mail, Facebook, Instagram } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 
@@ -55,13 +56,6 @@ const PILLS = [
   { text: "UX/UI ✦ DESIGNER", color: "blue" },
 ];
 
-// ✅ Chỉ cần sửa array này để thay đổi text contact — style tự giữ nguyên
-// const contactLines = [
-//   { text: "Don’t be shy", highlight: false },
-//   { text: "Hello", highlight: true },
-//   { text: "Let's talk", highlight: false },
-// ];
-
 function Marquee() {
   const x = useRef(0);
   const [offset, setOffset] = useState(0);
@@ -86,7 +80,7 @@ function Marquee() {
             className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black flex-shrink-0"
             style={{
               fontFamily: "'Georgia', serif",
-              background: p.color === "orange" ? "#F5A623" : "#3B5BDB",
+              background: p.color === "orange" ? "#FF8E53" : "#5C7CFA",
               color: p.color === "orange" ? "#1a1a1a" : "#fff",
               border: "2px solid #1a1a1a",
               boxShadow: "3px 3px 0px #1a1a1a",
@@ -110,21 +104,15 @@ function ProjectCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
-
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
-    const cx = (e.clientX - rect.left) / rect.width - 0.5;
-    const cy = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: cy * -10, y: cx * 10 });
+    setTilt({
+      x: ((e.clientY - rect.top) / rect.height - 0.5) * -10,
+      y: ((e.clientX - rect.left) / rect.width - 0.5) * 10,
+    });
   };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setHovered(false);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -138,7 +126,10 @@ function ProjectCard({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => {
+        setTilt({ x: 0, y: 0 });
+        setHovered(false);
+      }}
       style={{ perspective: "900px", transformStyle: "preserve-3d" }}
     >
       <Link href={`/work/${project.slug}`} className="block">
@@ -147,7 +138,7 @@ function ProjectCard({
             rotateX: tilt.x,
             rotateY: tilt.y,
             scale: hovered ? 1.02 : 1,
-            boxShadow: hovered ? "8px 8px 0px #3B5BDB" : "4px 4px 0px #1a1a1a",
+            boxShadow: hovered ? "8px 8px 0px #5C7CFA" : "4px 4px 0px #1a1a1a",
           }}
           transition={{ type: "spring", stiffness: 300, damping: 28 }}
           className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-4"
@@ -199,7 +190,7 @@ function ProjectCard({
             <span
               className="inline-block px-3 py-1.5 rounded-lg text-xs font-black"
               style={{
-                background: "#F5A623",
+                background: "#FF8E53",
                 color: "#1a1a1a",
                 border: "2px solid #1a1a1a",
                 boxShadow: "2px 2px 0px #1a1a1a",
@@ -210,12 +201,11 @@ function ProjectCard({
             </span>
           </motion.div>
         </motion.div>
-
         <p className="text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-1">
           {project.category} · {project.year}
         </p>
         <motion.h3
-          animate={{ color: hovered ? "#3B5BDB" : "#1a1a1a" }}
+          animate={{ color: hovered ? "#5C7CFA" : "#1a1a1a" }}
           transition={{ duration: 0.18 }}
           className="text-lg font-black mb-1.5"
           style={{ fontFamily: "'Georgia', serif" }}
@@ -230,7 +220,7 @@ function ProjectCard({
             <motion.span
               key={tag}
               animate={{
-                background: hovered ? "#3B5BDB" : "#f0f0f0",
+                background: hovered ? "#5C7CFA" : "#f0f0f0",
                 color: hovered ? "#fff" : "#1a1a1a",
               }}
               transition={{ duration: 0.18 }}
@@ -261,12 +251,12 @@ function SkillCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.07 }}
-      whileHover={{ y: -4, boxShadow: "4px 4px 0px #3B5BDB" }}
+      whileHover={{ y: -4, boxShadow: "4px 4px 0px #5C7CFA" }}
       className="bg-white rounded-xl p-5"
       style={{ border: "2px solid #1a1a1a", boxShadow: "3px 3px 0px #1a1a1a" }}
     >
       <h3
-        className="text-sm font-black text-[#3B5BDB] mb-1"
+        className="text-sm font-black text-[#5C7CFA] mb-1"
         style={{ fontFamily: "'Georgia', serif" }}
       >
         {title}
@@ -367,7 +357,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-neutral-600 leading-relaxed mb-6 text-m max-w-2xl text-justify [hyphens:auto]">
+              <p className="text-neutral-600 leading-relaxed mb-6 text-base max-w-2xl text-justify">
                 I&apos;m a UX/UI Designer with 6 months of experience, driven by
                 a passion for solving user problems and creating simple,
                 meaningful digital experiences. Through self-initiated projects
@@ -420,174 +410,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── Contact ── */}
-      <section
-        id="contact"
-        className="py-24 px-6 bg-white relative overflow-hidden"
-      >
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.18]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)`,
-            backgroundSize: "52px 52px",
-          }}
-        />
-
-        <div className="relative z-10">
-          {/* heading — không giới hạn width, whitespace-nowrap */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-10 text-center"
-          >
-            <div className="flex items-start justify-center gap-2 mb-0.5">
-              <h2
-                className="font-black text-[#1a1a1a] leading-[1.05] whitespace-nowrap"
-                style={{
-                  fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
-                  fontFamily: "'Georgia', serif",
-                }}
-              >
-                Don’t be shy
-              </h2>
-              <motion.span
-                className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0"
-                animate={{ rotate: [0, 20, -20, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                ✦
-              </motion.span>
-            </div>
-            <div className="flex items-center justify-center gap-2.5 mb-0.5">
-              <span
-                className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
-                style={{
-                  background: "#F5A623",
-                  color: "#1a1a1a",
-                  border: "2px solid #1a1a1a",
-                  boxShadow: "3px 3px 0px #1a1a1a",
-                  fontFamily: "'Georgia', serif",
-                  fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
-                }}
-              >
-                Hello
-              </span>
-            </div>
-            <h2
-              className="font-black text-[#1a1a1a] leading-[1.05] text-center whitespace-nowrap"
-              style={{
-                fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
-                fontFamily: "'Georgia', serif",
-              }}
-            >
-              let&apos;s Talk
-            </h2>
-          </motion.div>
-
-          {/* social — giữ max-w-lg */}
-          <div className="max-w-lg mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
-              className="flex items-stretch gap-4"
-            >
-              <motion.div
-                initial={{ rotate: -5 }}
-                whileHover={{ rotate: 0, scale: 1.04 }}
-                transition={{ type: "spring", stiffness: 280, damping: 20 }}
-                className="flex-shrink-0"
-              >
-                <div
-                  className="w-[100px] rounded-2xl overflow-hidden"
-                  style={{
-                    height: "100%",
-                    minHeight: "136px",
-                    border: "3px solid #1a1a1a",
-                    boxShadow:
-                      "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
-                  }}
-                >
-                  <div
-                    className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
-                    style={{ minHeight: "136px" }}
-                  >
-                    <span
-                      className="text-white font-black text-3xl"
-                      style={{ fontFamily: "'Georgia', serif" }}
-                    >
-                      V
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-              <div className="flex flex-col gap-3 flex-1">
-                <motion.a
-                  href="mailto:lvithong31@gmail.com"
-                  whileHover={{ scale: 1.02, x: 3 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
-                  style={{
-                    background: "#3B5BDB",
-                    border: "2px solid #1a1a1a",
-                    boxShadow: "3px 3px 0px #1a1a1a",
-                    fontSize: "15px",
-                  }}
-                >
-                  <Mail className="w-5 h-5 flex-shrink-0" />
-                  <span>lvithong31@gmail.com</span>
-                </motion.a>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    {
-                      href: "https://www.facebook.com/Brazes.3110/",
-                      label: "Facebook",
-                      icon: <Facebook className="w-6 h-6" />,
-                    },
-                    {
-                      href: "https://www.behance.net/vhoang310",
-                      label: "Behance",
-                      icon: (
-                        <span className="font-black text-lg leading-none">
-                          Bē
-                        </span>
-                      ),
-                    },
-                    {
-                      href: "https://www.instagram.com/vhoang.310/",
-                      label: "Instagram",
-                      icon: <Instagram className="w-6 h-6" />,
-                    },
-                  ].map((s) => (
-                    <motion.a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.label}
-                      whileHover={{ scale: 1.06, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center justify-center rounded-2xl text-white"
-                      style={{
-                        background: "#3B5BDB",
-                        border: "2px solid #1a1a1a",
-                        boxShadow: "2px 2px 0px #1a1a1a",
-                        paddingTop: "18px",
-                        paddingBottom: "18px",
-                      }}
-                    >
-                      {s.icon}
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* ✅ Dùng chung ContactSection — giống y hệt slug page */}
+      <ContactSection />
     </>
   );
 }

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Mail, Facebook, Instagram } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
+import ContactSection from "@/components/ContactSection";
 
 const DESIGN_SKILLS = [
   { label: "UI Design", icon: "🎨" },
@@ -14,7 +16,6 @@ const DESIGN_SKILLS = [
   { label: "Design Thinking", icon: "💡" },
 ];
 
-/* ── SVG logos cho từng tool ── */
 const FigmaLogo = () => (
   <svg width="20" height="20" viewBox="0 0 38 57" fill="none">
     <path
@@ -83,7 +84,6 @@ const TOOL_SKILLS = [
   { label: "Photoshop", logo: <PhotoshopLogo /> },
 ];
 
-/* ── Design skill pill (dùng emoji) ── */
 function DesignSkillPill({
   label,
   icon,
@@ -132,7 +132,6 @@ function DesignSkillPill({
   );
 }
 
-/* ── Tool pill (dùng SVG logo thật) ── */
 function ToolPill({
   label,
   logo,
@@ -221,52 +220,119 @@ export default function About() {
         }}
       />
 
-      {/* Hero */}
+      {/* ✅ Hero — 2 cột: text trái, ảnh phải */}
       <section className="relative z-10 pt-28 pb-12">
         <Container>
           <SectionTitle badge="About ✦ Me" badgeVariant="blue" />
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="font-black text-[#1a1a1a] mb-6"
-            style={{
-              fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
-              fontFamily: "'Georgia', serif",
-              lineHeight: 1.05,
-            }}
-          >
-            Hi, I&apos;m Viet Hoang
-          </motion.h1>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="space-y-3 max-w-2xl"
-          >
-            <p className="text-neutral-600 leading-relaxed text-sm">
-              I&apos;m a UX/UI designer passionate about creating simple,
-              intuitive, and meaningful digital experiences.
-            </p>
-            <p className="text-neutral-600 leading-relaxed text-sm">
-              My journey started with a curiosity about how people interact with
-              products — and how design can make those interactions smoother and
-              more enjoyable. Over the past 6 months, I've been learning and
-              practicing through self-initiated projects, focusing on solving
-              real user problems with thoughtful design decisions.
-            </p>
-            <p className="text-neutral-600 leading-relaxed text-sm">
-              I've worked on projects in areas like food delivery, movie
-              streaming, and productivity tools — where I explored user
-              behavior, refined user flows, and designed clean, user-friendly
-              interfaces.
-            </p>
-            <p className="text-neutral-600 leading-relaxed text-sm">
-              Currently, I'm looking for opportunities to grow as a designer,
-              contribute to real products, and continue building meaningful
-              digital experiences.
-            </p>
-          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Cột trái — text */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1
+                className="font-black text-[#1a1a1a] mb-6"
+                style={{
+                  fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
+                  fontFamily: "'Georgia', serif",
+                  lineHeight: 1.05,
+                }}
+              >
+                Hi, I&apos;m Viet Hoang
+              </h1>
+              <div className="space-y-3 max-w-xl">
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  I&apos;m a UX/UI designer passionate about creating simple,
+                  intuitive, and meaningful digital experiences.
+                </p>
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  My journey started with a curiosity about how people interact
+                  with products — and how design can make those interactions
+                  smoother and more enjoyable. Over the past 6 months, I've been
+                  learning and practicing through self-initiated projects,
+                  focusing on solving real user problems with thoughtful design
+                  decisions.
+                </p>
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  I've worked on projects in areas like food delivery, movie
+                  streaming, and productivity tools — where I explored user
+                  behavior, refined user flows, and designed clean,
+                  user-friendly interfaces.
+                </p>
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  Currently, I'm looking for opportunities to grow as a
+                  designer, contribute to real products, and continue building
+                  meaningful digital experiences.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* ✅ Cột phải — ảnh của bạn
+                Bước 1: Đặt ảnh vào /public/images/about.jpg (ảnh dọc đẹp hơn, tỉ lệ 3:4)
+                Bước 2: Xóa div placeholder bên dưới
+                Bước 3: Uncomment thẻ <Image> */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="flex justify-center lg:justify-end"
+            >
+              <motion.div
+                whileHover={{ rotate: 0, scale: 1.02 }}
+                initial={{ rotate: 2 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="relative"
+              >
+                <div
+                  className="w-[280px] h-[360px] rounded-3xl overflow-hidden relative"
+                  style={{
+                    border: "3px solid #1a1a1a",
+                    boxShadow: "8px 8px 0px #3B5BDB",
+                  }}
+                >
+                  {/* 👇 PLACEHOLDER — xóa div này khi đã có ảnh
+                  <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex flex-col items-center justify-center gap-3">
+                    <span
+                      className="text-white font-black text-7xl"
+                      style={{ fontFamily: "'Georgia', serif" }}
+                    >
+                      V
+                    </span>
+                    <span className="text-white/60 text-xs font-semibold text-center px-4">
+                      Thay bằng ảnh của bạn tại
+                      <br />
+                      /public/images/about.jpg
+                    </span>
+                  </div> */}
+
+                  {/* 👇 THAY ẢNH — uncomment đoạn này và xóa div placeholder ở trên */}
+                  <Image
+                    src="/images/vh.png"
+                    alt="Viet Hoang"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+
+                {/* badge nhỏ góc dưới trái */}
+                <div
+                  className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-xl text-xs font-black"
+                  style={{
+                    background: "#F5A623",
+                    color: "#1a1a1a",
+                    border: "2px solid #1a1a1a",
+                    boxShadow: "2px 2px 0px #1a1a1a",
+                    fontFamily: "'Georgia', serif",
+                  }}
+                >
+                  UI/UX Designer ✦
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </Container>
       </section>
 
@@ -289,7 +355,6 @@ export default function About() {
               />
             ))}
           </div>
-
           <SectionTitle
             badge="Tools ✦"
             badgeVariant="orange"
@@ -364,170 +429,7 @@ export default function About() {
       </section>
 
       {/* Contact */}
-      <section
-        id="contact"
-        className="py-24 px-6 bg-white relative overflow-hidden"
-      >
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.18]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)`,
-            backgroundSize: "52px 52px",
-          }}
-        />
-        <div className="relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-10 text-center"
-          >
-            <div className="flex items-start justify-center gap-2 mb-0.5">
-              <h2
-                className="font-black text-[#1a1a1a] leading-[1.05] whitespace-nowrap"
-                style={{
-                  fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
-                  fontFamily: "'Georgia', serif",
-                }}
-              >
-                Don&apos;t be shy
-              </h2>
-              <motion.span
-                className="text-[#3B5BDB] text-xl select-none mt-1.5 flex-shrink-0"
-                animate={{ rotate: [0, 20, -20, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                ✦
-              </motion.span>
-            </div>
-            <div className="flex items-center justify-center gap-2.5 mb-0.5">
-              <span
-                className="inline-flex items-center px-4 py-1.5 rounded-xl font-black"
-                style={{
-                  background: "#F5A623",
-                  color: "#1a1a1a",
-                  border: "2px solid #1a1a1a",
-                  boxShadow: "3px 3px 0px #1a1a1a",
-                  fontFamily: "'Georgia', serif",
-                  fontSize: "clamp(1.1rem, 3vw, 1.8rem)",
-                }}
-              >
-                Hello
-              </span>
-            </div>
-            <h2
-              className="font-black text-[#1a1a1a] leading-[1.05] text-center whitespace-nowrap"
-              style={{
-                fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
-                fontFamily: "'Georgia', serif",
-              }}
-            >
-              let&apos;s Talk
-            </h2>
-          </motion.div>
-
-          <div className="max-w-lg mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
-              className="flex items-stretch gap-4"
-            >
-              <motion.div
-                initial={{ rotate: -5 }}
-                whileHover={{ rotate: 0, scale: 1.04 }}
-                transition={{ type: "spring", stiffness: 280, damping: 20 }}
-                className="flex-shrink-0"
-              >
-                <div
-                  className="w-[100px] rounded-2xl overflow-hidden"
-                  style={{
-                    height: "100%",
-                    minHeight: "136px",
-                    border: "3px solid #1a1a1a",
-                    boxShadow:
-                      "6px 6px 0px #3B5BDB, 9px 9px 0px rgba(59,91,219,0.2)",
-                  }}
-                >
-                  <div
-                    className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center"
-                    style={{ minHeight: "136px" }}
-                  >
-                    <span
-                      className="text-white font-black text-3xl"
-                      style={{ fontFamily: "'Georgia', serif" }}
-                    >
-                      V
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-              <div className="flex flex-col gap-3 flex-1">
-                <motion.a
-                  href="mailto:lvithong31@gmail.com"
-                  whileHover={{ scale: 1.02, x: 3 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex items-center justify-center gap-2.5 px-5 py-[18px] rounded-2xl font-bold text-white w-full"
-                  style={{
-                    background: "#3B5BDB",
-                    border: "2px solid #1a1a1a",
-                    boxShadow: "3px 3px 0px #1a1a1a",
-                    fontSize: "15px",
-                  }}
-                >
-                  <Mail className="w-5 h-5 flex-shrink-0" />
-                  <span>lvithong31@gmail.com</span>
-                </motion.a>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    {
-                      href: "https://www.facebook.com/Brazes.3110/",
-                      label: "Facebook",
-                      icon: <Facebook className="w-6 h-6" />,
-                    },
-                    {
-                      href: "https://www.behance.net/vhoang310",
-                      label: "Behance",
-                      icon: (
-                        <span className="font-black text-lg leading-none">
-                          Bē
-                        </span>
-                      ),
-                    },
-                    {
-                      href: "https://www.instagram.com/vhoang.310/",
-                      label: "Instagram",
-                      icon: <Instagram className="w-6 h-6" />,
-                    },
-                  ].map((s) => (
-                    <motion.a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.label}
-                      whileHover={{ scale: 1.06, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center justify-center rounded-2xl text-white"
-                      style={{
-                        background: "#3B5BDB",
-                        border: "2px solid #1a1a1a",
-                        boxShadow: "2px 2px 0px #1a1a1a",
-                        paddingTop: "18px",
-                        paddingBottom: "18px",
-                      }}
-                    >
-                      {s.icon}
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <ContactSection />
     </div>
   );
 }

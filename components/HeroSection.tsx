@@ -15,7 +15,6 @@ const wordReveal: Variants = {
   },
 };
 
-// ✅ Mỗi LINE là 1 đơn vị animate — wrap đẹp, căn giữa tự nhiên
 const lines = ["From ideas to", "meaningful, user-centered", "experiences."];
 
 export default function HeroSection() {
@@ -32,7 +31,6 @@ export default function HeroSection() {
       ref={ref}
       className="relative min-h-screen bg-[#ebebeb] flex flex-col overflow-hidden"
     >
-      {/* grid bg */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -62,13 +60,13 @@ export default function HeroSection() {
             >
               UI/UX Designer
             </span>
-            <span className="absolute -top-2 -right-2 text-[#3B5BDB] text-xs">
+            <span className="absolute -top-2 -right-2 text-[#5C7CFA] text-xs">
               ✦
             </span>
           </motion.div>
         </div>
 
-        {/* ✅ Headline: mỗi line là 1 block, căn giữa, wrap tự nhiên */}
+        {/* Headline */}
         <motion.div
           style={{ y: headY }}
           className="flex-1 flex items-center justify-center px-6"
@@ -81,7 +79,6 @@ export default function HeroSection() {
             }}
           >
             {lines.map((line, i) => (
-              // ✅ block + overflow-hidden = mỗi dòng animate riêng, căn giữa bình thường
               <div key={i} className="overflow-hidden">
                 <motion.div
                   initial="hidden"
@@ -89,7 +86,6 @@ export default function HeroSection() {
                   variants={wordReveal}
                   transition={{ delay: 0.1 + i * 0.1 }}
                   style={{
-                    // ✅ font tự co theo viewport, không bao giờ tràn
                     fontSize: "clamp(2.6rem, 9vw, 7rem)",
                     display: "block",
                   }}
@@ -101,83 +97,73 @@ export default function HeroSection() {
           </h1>
         </motion.div>
 
-        {/* ✅ BOTTOM ROW: avatar LEFT · arrow · text+buttons RIGHT */}
+        {/* BOTTOM ROW — avatar to hơn, giống hình ref */}
         <motion.div style={{ y: bottomY }} className="w-full pb-10 px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="max-w-5xl mx-auto flex items-end justify-end gap-6"
+            className="max-w-5xl mx-auto flex items-end justify-end gap-8"
           >
-            {/* avatar LEFT, tilted */}
+            {/* Avatar — to hơn, nghiêng nhẹ như hình mẫu */}
             <motion.div
-              initial={{ rotate: -6 }}
-              whileHover={{ rotate: 0, scale: 1.05 }}
+              initial={{ rotate: -8 }}
+              whileHover={{ rotate: 0, scale: 1.04 }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
               className="flex-shrink-0"
             >
               <div
-                className="w-[130px] h-[160px] rounded-3xl overflow-hidden"
+                className="rounded-3xl overflow-hidden"
                 style={{
-                  border: "3px solid #fff",
-                  boxShadow: "5px 5px 0px #3B5BDB",
+                  width: "160px",
+                  height: "240px",
+                  border: "3px solid #1a1a1a",
+                  boxShadow: "6px 6px 0px #5C7CFA",
                 }}
               >
-                {/* 👉 Replace: <Image src="/avatar.jpg" alt="Viet Hoang" fill className="object-cover" /> */}
-                <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex items-center justify-center">
-                  <span
-                    className="text-white font-black text-5xl"
-                    style={{ fontFamily: "'Georgia', serif" }}
-                  >
-                    V
-                  </span>
-                </div>
+                <img
+                  src="/images/avt.png"
+                  alt="Viet Hoang"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
             </motion.div>
 
             {/* arrow */}
             <svg
-              className="flex-shrink-0 mb-10"
-              width="52"
-              height="44"
-              viewBox="0 0 52 44"
+              className="flex-shrink-0 mb-14"
+              width="60"
+              height="52"
+              viewBox="0 0 60 52"
               fill="none"
             >
               <path
-                d="M4 8 C16 6, 38 22, 48 40"
+                d="M4 8 C18 6, 46 26, 56 48"
                 stroke="#1a1a1a"
-                strokeWidth="2.2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 fill="none"
               />
               <path
-                d="M42 34 L48 40 L40 40"
+                d="M49 42 L56 48 L48 48"
                 stroke="#1a1a1a"
-                strokeWidth="2.2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 fill="none"
               />
             </svg>
 
-            {/* ✅ text RIGHT — to hơn, buttons cùng 1 hàng */}
-            <div className="text-left max-w-[300px] mb-2">
+            {/* text + buttons */}
+            <div className="text-left max-w-[300px] mb-4">
               <p className="text-neutral-500 text-[16px] leading-relaxed mb-5">
                 Hi, I&apos;m{" "}
-                <span
-                  className="font-black"
-                  style={{
-                    color: "#3B5BDB",
-                    textShadow: "1px 1px 0px rgba(59,91,219,0.18)",
-                  }}
-                >
+                <span className="font-black" style={{ color: "#5C7CFA" }}>
                   Viet Hoang
-                </span>{" "}
+                </span>
                 , a UX/UI Designer turning ideas into simple, user-friendly
                 experiences.
               </p>
-
-              {/* ✅ 2 buttons cùng 1 hàng, không wrap */}
               <div className="flex items-center gap-2.5 flex-nowrap">
                 <motion.div
                   whileHover={{ y: -2 }}
@@ -186,19 +172,18 @@ export default function HeroSection() {
                 >
                   <Link
                     href="/work"
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-black rounded-full whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full whitespace-nowrap"
                     style={{
-                      background: "#3B5BDB",
+                      background: "#1a1a1a",
                       color: "#fff",
-                      border: "2px solid #1a1a1a",
-                      boxShadow: "3px 3px 0px #1a1a1a",
+                      border: "1.5px solid #1a1a1a",
                       fontFamily: "'Georgia', serif",
+                      letterSpacing: "0.01em",
                     }}
                   >
-                    View Work <ArrowUpRight className="w-4 h-4" />
+                    View Work <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </motion.div>
-
                 <motion.div
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.95 }}
@@ -206,16 +191,16 @@ export default function HeroSection() {
                 >
                   <Link
                     href="/#contact"
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-black rounded-full whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full whitespace-nowrap"
                     style={{
-                      background: "#F5A623",
+                      background: "transparent",
                       color: "#1a1a1a",
-                      border: "2px solid #1a1a1a",
-                      boxShadow: "3px 3px 0px #1a1a1a",
+                      border: "1.5px solid #1a1a1a",
                       fontFamily: "'Georgia', serif",
+                      letterSpacing: "0.01em",
                     }}
                   >
-                    Contact Me ✦
+                    Contact Me
                   </Link>
                 </motion.div>
               </div>
@@ -224,9 +209,9 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* spinning stars */}
+      {/* stars */}
       <motion.div
-        className="absolute top-[22%] left-[7%] text-[#3B5BDB] select-none pointer-events-none"
+        className="absolute top-[22%] left-[7%] text-[#5C7CFA] select-none pointer-events-none"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1, rotate: 360 }}
         transition={{
@@ -238,9 +223,8 @@ export default function HeroSection() {
       >
         ✦
       </motion.div>
-
       <motion.div
-        className="absolute bottom-[25%] right-[5%] text-[#3B5BDB] select-none pointer-events-none"
+        className="absolute bottom-[25%] right-[5%] text-[#5C7CFA] select-none pointer-events-none"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1, rotate: -360 }}
         transition={{
@@ -263,7 +247,7 @@ export default function HeroSection() {
         <motion.button
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="w-11 h-11 rounded-full bg-[#3B5BDB] flex items-center justify-center text-white font-bold text-base"
+          className="w-11 h-11 rounded-full bg-[#5C7CFA] flex items-center justify-center text-white font-bold text-base"
           style={{
             border: "2px solid #1a1a1a",
             boxShadow: "3px 3px 0px #1a1a1a",
