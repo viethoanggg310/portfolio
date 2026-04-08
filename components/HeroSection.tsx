@@ -86,7 +86,7 @@ export default function HeroSection() {
                   variants={wordReveal}
                   transition={{ delay: 0.1 + i * 0.1 }}
                   style={{
-                    fontSize: "clamp(2.6rem, 9vw, 7rem)",
+                    fontSize: "clamp(2.2rem, 8vw, 7rem)",
                     display: "block",
                   }}
                 >
@@ -97,112 +97,184 @@ export default function HeroSection() {
           </h1>
         </motion.div>
 
-        {/* BOTTOM ROW — avatar to hơn, giống hình ref */}
+        {/* BOTTOM ROW
+            Mobile:  avatar trên giữa → text + buttons dưới (stack dọc)
+            Desktop: avatar trái → arrow → text+buttons phải (hàng ngang)
+        */}
         <motion.div style={{ y: bottomY }} className="w-full pb-10 px-6">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="max-w-5xl mx-auto flex items-end justify-end gap-8"
+            className="max-w-5xl mx-auto"
           >
-            {/* Avatar — to hơn, nghiêng nhẹ như hình mẫu */}
-            <motion.div
-              initial={{ rotate: -8 }}
-              whileHover={{ rotate: 0, scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="flex-shrink-0"
-            >
-              <div
-                className="rounded-3xl overflow-hidden"
-                style={{
-                  width: "160px",
-                  height: "240px",
-                  border: "3px solid #1a1a1a",
-                  boxShadow: "6px 6px 0px #5C7CFA",
-                }}
+            {/* ── Mobile layout: stack dọc, căn giữa ── */}
+            <div className="flex flex-col items-center gap-6 md:hidden">
+              {/* avatar — to, nghiêng nhẹ */}
+              <motion.div
+                initial={{ rotate: -6 }}
+                whileHover={{ rotate: 0, scale: 1.04 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
               >
-                <img
-                  src="/images/avt.png"
-                  alt="Viet Hoang"
-                  className="w-full h-full object-cover object-top"
-                />
+                <div
+                  className="rounded-3xl overflow-hidden"
+                  style={{
+                    width: "160px",
+                    height: "200px",
+                    border: "3px solid #1a1a1a",
+                    boxShadow: "6px 6px 0px #5C7CFA",
+                  }}
+                >
+                  <img
+                    src="/images/avt.png"
+                    alt="Viet Hoang"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              </motion.div>
+
+              {/* text + buttons */}
+              <div className="text-center max-w-sm">
+                <p className="text-neutral-500 text-[15px] leading-relaxed mb-5">
+                  Hi, I&apos;m{" "}
+                  <span className="font-black" style={{ color: "#5C7CFA" }}>
+                    Viet Hoang
+                  </span>
+                  , a UX/UI Designer turning ideas into simple, user-friendly
+                  experiences.
+                </p>
+                <div className="flex items-center justify-center gap-3">
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href="/work"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full"
+                      style={{
+                        background: "#1a1a1a",
+                        color: "#fff",
+                        border: "1.5px solid #1a1a1a",
+                        fontFamily: "'Georgia', serif",
+                      }}
+                    >
+                      View Work <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href="/#contact"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full"
+                      style={{
+                        background: "transparent",
+                        color: "#1a1a1a",
+                        border: "1.5px solid #1a1a1a",
+                        fontFamily: "'Georgia', serif",
+                      }}
+                    >
+                      Contact Me
+                    </Link>
+                  </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* arrow */}
-            <svg
-              className="flex-shrink-0 mb-14"
-              width="60"
-              height="52"
-              viewBox="0 0 60 52"
-              fill="none"
-            >
-              <path
-                d="M4 8 C18 6, 46 26, 56 48"
-                stroke="#1a1a1a"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M49 42 L56 48 L48 48"
-                stroke="#1a1a1a"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-              />
-            </svg>
+            {/* ── Desktop layout: hàng ngang ── */}
+            <div className="hidden md:flex items-end justify-end gap-8">
+              {/* avatar */}
+              <motion.div
+                initial={{ rotate: -8 }}
+                whileHover={{ rotate: 0, scale: 1.04 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className="flex-shrink-0"
+              >
+                <div
+                  className="rounded-3xl overflow-hidden"
+                  style={{
+                    width: "160px",
+                    height: "240px",
+                    border: "3px solid #1a1a1a",
+                    boxShadow: "6px 6px 0px #5C7CFA",
+                  }}
+                >
+                  <img
+                    src="/images/avt.png"
+                    alt="Viet Hoang"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              </motion.div>
 
-            {/* text + buttons */}
-            <div className="text-left max-w-[300px] mb-4">
-              <p className="text-neutral-500 text-[16px] leading-relaxed mb-5">
-                Hi, I&apos;m{" "}
-                <span className="font-black" style={{ color: "#5C7CFA" }}>
-                  Viet Hoang
-                </span>
-                , a UX/UI Designer turning ideas into simple, user-friendly
-                experiences.
-              </p>
-              <div className="flex items-center gap-2.5 flex-nowrap">
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-shrink-0"
-                >
-                  <Link
-                    href="/work"
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full whitespace-nowrap"
-                    style={{
-                      background: "#1a1a1a",
-                      color: "#fff",
-                      border: "1.5px solid #1a1a1a",
-                      fontFamily: "'Georgia', serif",
-                      letterSpacing: "0.01em",
-                    }}
+              {/* arrow */}
+              <svg
+                className="flex-shrink-0 mb-14"
+                width="60"
+                height="52"
+                viewBox="0 0 60 52"
+                fill="none"
+              >
+                <path
+                  d="M4 8 C18 6, 46 26, 56 48"
+                  stroke="#1a1a1a"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+                <path
+                  d="M49 42 L56 48 L48 48"
+                  stroke="#1a1a1a"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
+
+              {/* text + buttons */}
+              <div className="text-left max-w-[300px] mb-4">
+                <p className="text-neutral-500 text-[16px] leading-relaxed mb-5">
+                  Hi, I&apos;m{" "}
+                  <span className="font-black" style={{ color: "#5C7CFA" }}>
+                    Viet Hoang
+                  </span>
+                  , a UX/UI Designer turning ideas into simple, user-friendly
+                  experiences.
+                </p>
+                <div className="flex items-center gap-2.5 flex-nowrap">
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-shrink-0"
                   >
-                    View Work <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
-                </motion.div>
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-shrink-0"
-                >
-                  <Link
-                    href="/#contact"
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full whitespace-nowrap"
-                    style={{
-                      background: "transparent",
-                      color: "#1a1a1a",
-                      border: "1.5px solid #1a1a1a",
-                      fontFamily: "'Georgia', serif",
-                      letterSpacing: "0.01em",
-                    }}
+                    <Link
+                      href="/work"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full whitespace-nowrap"
+                      style={{
+                        background: "#1a1a1a",
+                        color: "#fff",
+                        border: "1.5px solid #1a1a1a",
+                        fontFamily: "'Georgia', serif",
+                      }}
+                    >
+                      View Work <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-shrink-0"
                   >
-                    Contact Me
-                  </Link>
-                </motion.div>
+                    <Link
+                      href="/#contact"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full whitespace-nowrap"
+                      style={{
+                        background: "transparent",
+                        color: "#1a1a1a",
+                        border: "1.5px solid #1a1a1a",
+                        fontFamily: "'Georgia', serif",
+                      }}
+                    >
+                      Contact Me
+                    </Link>
+                  </motion.div>
+                </div>
               </div>
             </div>
           </motion.div>

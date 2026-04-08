@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { SectionTitle } from "@/components/SectionTitle";
-import { Mail, Facebook, Instagram } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import ContactSection from "@/components/ContactSection";
@@ -220,13 +219,95 @@ export default function About() {
         }}
       />
 
-      {/* ✅ Hero — 2 cột: text trái, ảnh phải */}
+      {/* Hero
+          Mobile:  avatar trên giữa → bio dưới
+          Desktop: text trái / ảnh phải (2 cột)
+      */}
       <section className="relative z-10 pt-28 pb-12">
         <Container>
           <SectionTitle badge="About ✦ Me" badgeVariant="blue" />
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Cột trái — text */}
+          {/* ── Mobile: avatar trên, bio dưới ── */}
+          <div className="flex flex-col items-center gap-8 lg:hidden">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative"
+            >
+              <motion.div
+                whileHover={{ rotate: 0, scale: 1.02 }}
+                initial={{ rotate: 2 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              >
+                <div
+                  className="w-[220px] h-[280px] rounded-3xl overflow-hidden relative"
+                  style={{
+                    border: "3px solid #1a1a1a",
+                    boxShadow: "8px 8px 0px #3B5BDB",
+                  }}
+                >
+                  <Image
+                    src="/images/vh.png"
+                    alt="Viet Hoang"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                <div
+                  className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-xl text-xs font-black"
+                  style={{
+                    background: "#F5A623",
+                    color: "#1a1a1a",
+                    border: "2px solid #1a1a1a",
+                    boxShadow: "2px 2px 0px #1a1a1a",
+                    fontFamily: "'Georgia', serif",
+                  }}
+                >
+                  UI/UX Designer ✦
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* bio text */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="w-full"
+            >
+              <h1
+                className="font-black text-[#1a1a1a] mb-4 text-center"
+                style={{
+                  fontSize: "clamp(2rem, 7vw, 3.5rem)",
+                  fontFamily: "'Georgia', serif",
+                  lineHeight: 1.05,
+                }}
+              >
+                Hi, I&apos;m Viet Hoang
+              </h1>
+              <div className="space-y-3">
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  I&apos;m a UX/UI designer passionate about creating simple,
+                  intuitive, and meaningful digital experiences.
+                </p>
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  My journey started with a curiosity about how people interact
+                  with products — and how design can make those interactions
+                  smoother and more enjoyable.
+                </p>
+                <p className="text-neutral-600 leading-relaxed text-sm">
+                  Currently, I'm looking for opportunities to grow as a
+                  designer, contribute to real products, and continue building
+                  meaningful digital experiences.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ── Desktop: text trái / ảnh phải ── */}
+          <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -269,10 +350,6 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* ✅ Cột phải — ảnh của bạn
-                Bước 1: Đặt ảnh vào /public/images/about.jpg (ảnh dọc đẹp hơn, tỉ lệ 3:4)
-                Bước 2: Xóa div placeholder bên dưới
-                Bước 3: Uncomment thẻ <Image> */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -292,22 +369,6 @@ export default function About() {
                     boxShadow: "8px 8px 0px #3B5BDB",
                   }}
                 >
-                  {/* 👇 PLACEHOLDER — xóa div này khi đã có ảnh
-                  <div className="w-full h-full bg-gradient-to-br from-[#3B5BDB] to-indigo-800 flex flex-col items-center justify-center gap-3">
-                    <span
-                      className="text-white font-black text-7xl"
-                      style={{ fontFamily: "'Georgia', serif" }}
-                    >
-                      V
-                    </span>
-                    <span className="text-white/60 text-xs font-semibold text-center px-4">
-                      Thay bằng ảnh của bạn tại
-                      <br />
-                      /public/images/about.jpg
-                    </span>
-                  </div> */}
-
-                  {/* 👇 THAY ẢNH — uncomment đoạn này và xóa div placeholder ở trên */}
                   <Image
                     src="/images/vh.png"
                     alt="Viet Hoang"
@@ -316,8 +377,6 @@ export default function About() {
                     priority
                   />
                 </div>
-
-                {/* badge nhỏ góc dưới trái */}
                 <div
                   className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-xl text-xs font-black"
                   style={{
@@ -428,7 +487,6 @@ export default function About() {
         </Container>
       </section>
 
-      {/* Contact */}
       <ContactSection />
     </div>
   );
