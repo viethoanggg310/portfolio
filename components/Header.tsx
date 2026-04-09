@@ -194,7 +194,9 @@ export function Header() {
 
               {/* Resume CTA */}
               <motion.a
-                href={RESUME_DRIVE_LINK}
+                href={
+                  "https://drive.google.com/drive/folders/1PihT0_2HnNRbAQ_hpiVZjQExTQiGQeO2?usp=drive_link"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{

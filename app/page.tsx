@@ -33,18 +33,18 @@ const projects = [
     year: "2026",
     accentBg: "#e8f5e4",
   },
-  {
-    id: 3,
-    title: "LearnSpace",
-    slug: "LearnSpace-platform",
-    category: "EdTech",
-    description:
-      "Making online learning feel human with a clean, accessible platform.",
-    image: "/projects/project3.jpg",
-    tags: ["UI/UX", "Web"],
-    year: "2023",
-    accentBg: "#e8f0ff",
-  },
+  // {
+  //   id: 3,
+  //   title: "LearnSpace",
+  //   slug: "LearnSpace-platform",
+  //   category: "EdTech",
+  //   description:
+  //     "Making online learning feel human with a clean, accessible platform.",
+  //   image: "/projects/project3.jpg",
+  //   tags: ["UI/UX", "Web"],
+  //   year: "2023",
+  //   accentBg: "#e8f0ff",
+  // },
 ];
 
 const PILLS = [

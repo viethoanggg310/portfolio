@@ -32,18 +32,18 @@ const projects = [
     year: "2026",
     accentBg: "#e8f5e4",
   },
-  {
-    id: 3,
-    title: "LearnSpace",
-    slug: "LearnSpace-platform",
-    category: "App Design",
-    description:
-      "Health and fitness app with personalized workout plans and progress tracking.",
-    image: "/projects/project3.jpg",
-    tags: ["UI/UX", "Mobile", "Health"],
-    year: "2023",
-    accentBg: "#e8f0ff",
-  },
+  // {
+  //   id: 3,
+  //   title: "LearnSpace",
+  //   slug: "LearnSpace-platform",
+  //   category: "App Design",
+  //   description:
+  //     "Health and fitness app with personalized workout plans and progress tracking.",
+  //   image: "/projects/project3.jpg",
+  //   tags: ["UI/UX", "Mobile", "Health"],
+  //   year: "2023",
+  //   accentBg: "#e8f0ff",
+  // },
 ];
 
 const categories = ["All", "App Design", "Web Design"];
